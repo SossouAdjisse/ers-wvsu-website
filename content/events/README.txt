@@ -1,0 +1,1 @@
+This collection intentionally starts empty. Add only confirmed public seminars via Pages CMS or a JSON file. Draft JSON in a public GitHub repository is still visible to anyone who visits the repository.

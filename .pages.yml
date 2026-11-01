@@ -1,0 +1,338 @@
+# Pages CMS reads this file from the GitHub repository root.
+# Website content is intentionally stored in JSON for easy local editing.
+media:
+  input: public/media
+  output: /media
+  rename: safe
+  categories: [image, document]
+
+content:
+  - name: global
+    label: Site settings
+    type: file
+    path: content/site.json
+    format: json
+    fields:
+      - {name: site_name, label: Program name, type: string, required: true}
+      - {name: short_name, label: Short name, type: string, required: true}
+      - {name: institution, label: Institution, type: string}
+      - {name: strapline, label: Header strapline, type: string}
+      - {name: meta_description, label: Search description, type: text}
+      - {name: contact_email, label: Primary contact email, type: string, description: Research inquiry emails will be addressed here via the visitor’s own email app}
+      - {name: alternate_contact_email, label: Alternative contact email, type: string, description: Displayed as another direct email option}
+      - {name: proposal_form_url, label: Speaker proposal form URL, type: string, description: Optional full HTTPS URL for a working Google Form}
+      - {name: mailing_list_url, label: Mailing list signup URL, type: string, description: Optional full HTTPS URL}
+      - {name: custom_domain, label: Custom domain, type: string, description: Only set after configuring GitHub Pages and Porkbun; example www.erswvsu.org}
+      - {name: university_url, label: WVSU website URL, type: string}
+      - {name: footer_note, label: Footer note, type: text}
+
+  - name: appearance
+    label: "Appearance: fonts & colors"
+    type: file
+    path: content/appearance.json
+    format: json
+    fields:
+      - {name: body_font_px, label: Main paragraph font size (15–24 px), type: number, required: true}
+      - {name: navigation_font_px, label: Navigation font size (13–19 px), type: number, required: true}
+      - {name: card_font_px, label: Cards and details font size (14–22 px), type: number, required: true}
+      - {name: small_label_font_px, label: Eyebrow and small label size (11–16 px), type: number, required: true}
+      - {name: background_color, label: Light website background (#RRGGBB), type: string, required: true}
+      - {name: secondary_background_color, label: Alternate section background (#RRGGBB), type: string, required: true}
+      - {name: dark_background_color, label: Dark background (#RRGGBB), type: string, required: true}
+      - {name: accent_color, label: Accent gold (#RRGGBB), type: string, required: true}
+
+  - name: home
+    label: Homepage text
+    type: file
+    path: content/pages/home.json
+    format: json
+    fields:
+      - {name: eyebrow, label: Hero eyebrow, type: string}
+      - {name: headline_line_one, label: Hero heading first line, type: string}
+      - {name: headline_line_two, label: Hero heading emphasized line, type: string}
+      - {name: intro, label: Hero description, type: text}
+      - {name: section_one_label, label: Purpose eyebrow, type: string}
+      - {name: section_one_title, label: Purpose title, type: string}
+      - {name: section_one_emphasis, label: Purpose title emphasized, type: string}
+      - {name: section_one_intro, label: Purpose description, type: text}
+      - {name: pillar_one_title, label: Research card title, type: string}
+      - {name: pillar_one_text, label: Research card text, type: text}
+      - {name: pillar_two_title, label: Collaboration card title, type: string}
+      - {name: pillar_two_text, label: Collaboration card text, type: text}
+      - {name: pillar_three_title, label: Student card title, type: string}
+      - {name: pillar_three_text, label: Student card text, type: text}
+      - {name: regional_title, label: Region title, type: string}
+      - {name: regional_emphasis, label: Region title emphasized, type: string}
+      - {name: regional_text, label: Region description, type: text}
+      - {name: closing_title, label: Participation title, type: string}
+      - {name: closing_emphasis, label: Participation title emphasized, type: string}
+      - {name: closing_text, label: Participation description, type: text}
+
+  - name: partnerships_copy
+    label: Research partnerships page
+    type: file
+    path: content/pages/partnerships.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: services_heading, type: string}
+      - {name: services_intro, type: text}
+      - {name: pathway_heading, type: string}
+      - {name: pathway_intro, type: text}
+      - {name: fit_heading, type: string}
+      - {name: fit_intro, type: text}
+      - {name: fit_one_title, type: string}
+      - {name: fit_one_text, type: text}
+      - {name: fit_two_title, type: string}
+      - {name: fit_two_text, type: text}
+      - {name: fit_three_title, type: string}
+      - {name: fit_three_text, type: text}
+      - {name: campus_title, type: string}
+      - {name: campus_text, type: text}
+      - {name: campus_news_url, label: Official supporting article, type: string}
+
+  - name: seminars_copy
+    label: Seminars page text
+    type: file
+    path: content/pages/seminars.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: next_empty_title, type: string}
+      - {name: next_empty_text, type: text}
+      - {name: format_title, type: string}
+      - {name: format_text, type: text}
+
+  - name: speakers_copy
+    label: Speakers page text
+    type: file
+    path: content/pages/speakers.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: invitation_title, type: string}
+      - {name: invitation_text, type: text}
+
+  - name: archive_copy
+    label: Archive page text
+    type: file
+    path: content/pages/archive.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: empty_title, type: string}
+      - {name: empty_text, type: text}
+
+  - name: get_involved_copy
+    label: Get involved page text
+    type: file
+    path: content/pages/get-involved.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: proposal_title, type: string}
+      - {name: proposal_text, type: text}
+      - {name: contact_title, type: string}
+      - {name: contact_text, type: text}
+
+  - name: about_copy
+    label: About page text
+    type: file
+    path: content/pages/about.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: mission_title, type: string}
+      - {name: mission_text, type: text}
+      - {name: origin_title, type: string}
+      - {name: origin_text, type: text}
+      - {name: principle_one_title, type: string}
+      - {name: principle_one_text, type: text}
+      - {name: principle_two_title, type: string}
+      - {name: principle_two_text, type: text}
+      - {name: principle_three_title, type: string}
+      - {name: principle_three_text, type: text}
+      - {name: principle_four_title, type: string}
+      - {name: principle_four_text, type: text}
+
+  - name: past_speakers_copy
+    label: Past speakers page
+    type: file
+    path: content/pages/past-speakers.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: section_heading, type: string}
+      - {name: section_intro, type: text}
+
+  - name: students_copy
+    label: Student Research & Mentorship page
+    type: file
+    path: content/pages/students.json
+    format: json
+    fields:
+      - {name: eyebrow, type: string}
+      - {name: heading, type: string}
+      - {name: heading_emphasis, type: string}
+      - {name: intro, type: text}
+      - {name: spotlight_title, type: string}
+      - {name: spotlight_intro, type: text}
+      - {name: spotlight_empty_title, type: string}
+      - {name: spotlight_empty_text, type: text}
+      - {name: mentorship_title, type: string}
+      - {name: mentorship_intro, type: text}
+      - {name: closing_title, type: string}
+      - {name: closing_text, type: text}
+
+  - name: themes
+    label: Research themes
+    type: file
+    path: content/themes.json
+    format: json
+    list: true
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: description, type: text}
+      - {name: icon, type: select, options: {values: [landscape, book, leaf, building, briefcase, chart, users, compass, target, scales, file]}}
+
+  - name: capabilities
+    label: Research capabilities
+    type: file
+    path: content/capabilities.json
+    format: json
+    list: true
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: description, type: text}
+      - {name: icon, type: select, options: {values: [compass, target, chart, scales, file, users, book, leaf, building, briefcase]}}
+
+  - name: pathway
+    label: Collaboration process
+    type: file
+    path: content/pathway.json
+    format: json
+    list: true
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: description, type: text}
+
+  - name: events
+    label: Seminar events
+    type: collection
+    path: content/events
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      fields: [title, date, status, speaker_name]
+      primary: title
+      sort: [date, title]
+      default: {sort: date, order: desc}
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: slug, type: string, required: true, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+      - {name: date, type: date, default: "", options: {format: yyyy-MM-dd}}
+      - {name: start_time, type: string, description: HH:MM in 24-hour format, e.g. 12:30}
+      - {name: end_time, type: string, description: HH:MM in 24-hour format}
+      - {name: timezone, type: string, description: Default America/New_York}
+      - {name: event_type, type: select, options: {values: [Research seminar, Workshop, Student presentation, Panel discussion]}}
+      - {name: topic, type: string}
+      - {name: speaker_name, type: string}
+      - {name: speaker_affiliation, type: string}
+      - {name: speaker_slug, type: string, description: Optional slug matching a published speaker profile}
+      - {name: location, type: string}
+      - {name: abstract, type: text}
+      - {name: registration_url, type: string, description: Optional full HTTPS link}
+      - {name: materials_url, type: string, description: Optional full HTTPS link}
+      - {name: cover_image, type: image}
+      - {name: status, type: select, required: true, options: {values: [draft, scheduled, completed]}}
+      - {name: featured, type: boolean}
+
+  - name: speakers
+    label: Speakers & organizers
+    type: collection
+    path: content/speakers
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      fields: [name, role, status]
+      primary: name
+      sort: [name]
+    fields:
+      - {name: name, type: string, required: true}
+      - {name: slug, type: string, required: true, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+      - {name: role, type: string}
+      - {name: position, type: string}
+      - {name: affiliation, type: string}
+      - {name: expertise, type: text}
+      - {name: bio, type: text}
+      - {name: website_url, type: string}
+      - {name: photo, type: image}
+      - {name: status, type: select, required: true, options: {values: [draft, published]}}
+      - {name: sort_order, type: number}
+      - {name: past_speaker, label: Has presented at ERS–WVSU, type: boolean}
+      - {name: past_talk, label: Past presentation topic, type: string}
+      - {name: past_talk_note, label: Short description of previous talk, type: text}
+
+  - name: student_projects
+    label: Student research projects
+    type: collection
+    path: content/student-projects
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      fields: [project_title, student_name, status, consent_confirmed]
+      primary: project_title
+    fields:
+      - {name: project_title, label: Project title, type: string, required: true}
+      - {name: slug, type: string, required: true, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+      - {name: student_name, type: string, required: true}
+      - {name: program, label: Academic program, type: string}
+      - {name: year, type: string}
+      - {name: summary, type: text}
+      - {name: economics_angle, label: Economic question or research methods, type: text}
+      - {name: public_url, label: Optional public poster or paper URL, type: string}
+      - {name: status, type: select, required: true, options: {values: [draft, published]}}
+      - {name: consent_confirmed, label: Permission obtained to publish student name and work, type: boolean, default: false}
+      - {name: sort_order, type: number}
+
+  - name: resources
+    label: Research archive entries
+    type: collection
+    path: content/resources
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      fields: [title, type, year, status]
+      primary: title
+      sort: [year, title]
+      default: {sort: year, order: desc}
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: slug, type: string, required: true, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+      - {name: type, type: select, options: {values: [Presentation, Working paper, Research brief, Recording, Dataset, Other]}}
+      - {name: year, type: string}
+      - {name: topic, type: string}
+      - {name: description, type: text}
+      - {name: url, type: string, description: Full HTTPS URL of public material}
+      - {name: status, type: select, required: true, options: {values: [draft, published]}}

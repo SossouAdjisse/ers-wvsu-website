@@ -1,0 +1,1 @@
+Student projects are not automatically public. Use the CMS to create an entry in draft; obtain the student’s permission before setting consent_confirmed=true and status=published. Do not disclose private student records.

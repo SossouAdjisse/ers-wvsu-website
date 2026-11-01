@@ -1,0 +1,10 @@
+{
+  "body_font_px": 18,
+  "navigation_font_px": 15,
+  "card_font_px": 16,
+  "small_label_font_px": 12,
+  "background_color": "#FCFBF7",
+  "secondary_background_color": "#F3F0E7",
+  "dark_background_color": "#151A17",
+  "accent_color": "#CFAB2B"
+}

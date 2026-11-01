@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Economic framing",
+    "description": "Identify incentives, behavior, market mechanisms, welfare effects, and testable economic hypotheses.",
+    "icon": "compass"
+  },
+  {
+    "title": "Research design & identification",
+    "description": "Clarify comparisons, counterfactuals, causal assumptions, timing, and threats to inference.",
+    "icon": "target"
+  },
+  {
+    "title": "Econometrics & data analysis",
+    "description": "Strengthen measurement, model choices, diagnostics, reproducibility, and interpretation.",
+    "icon": "chart"
+  },
+  {
+    "title": "Impact & cost-benefit analysis",
+    "description": "Assess distributional effects, adoption, effectiveness, costs, and policy relevance.",
+    "icon": "scales"
+  },
+  {
+    "title": "Joint papers & grant concepts",
+    "description": "Develop the economic and empirical contributions of research proposals and manuscripts.",
+    "icon": "file"
+  },
+  {
+    "title": "Student methods development",
+    "description": "Connect students to applied research questions, data practice, and collaborative learning.",
+    "icon": "users"
+  }
+]
