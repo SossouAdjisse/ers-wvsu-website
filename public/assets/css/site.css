@@ -785,3 +785,25 @@ h3 { line-height:1.25; }
   .footer-intro,.footer-linkcol { min-width:0; }
   .footer-linkcol { overflow-wrap:anywhere; }
 }
+
+
+/* ERS–WVSU v4: subject-specific email directory and contextual contact panels */
+.contact-route-section { background:var(--sand); padding:60px 0 72px; }
+.contact-route-wrap { display:grid; grid-template-columns:minmax(0,0.9fr) minmax(0,1.45fr); gap:52px; align-items:center; }
+.contact-route-header h2 { font:700 clamp(26px,3vw,39px)/1.14 var(--ui); letter-spacing:-.055em; margin:17px 0 14px; }
+.contact-route-header p:not(.eyebrow) { color:#505a51; font-size:var(--type-body); line-height:1.73; margin:0; }
+.contact-route-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr)); gap:12px; }
+.contact-route-card { min-width:0; display:grid; grid-template-columns:1fr auto; grid-template-rows:auto auto; align-items:center; gap:7px 8px; background:#fffefa; border:1px solid #d8d4c7; padding:20px 22px; transition:border-color .2s,transform .2s; }
+.contact-route-card:hover { border-color:#aa8a23; transform:translateY(-2px); }
+.contact-route-card .contact-route-label { grid-column:1/-1; color:#62695f; font:700 12px/1.5 var(--ui); text-transform:uppercase; letter-spacing:.075em; }
+.contact-route-card strong { min-width:0; overflow-wrap:anywhere; font:700 16px/1.55 var(--ui); }
+.contact-route-card svg { color:#9b7910; }
+.email-directory-section { background:var(--cream); }
+.email-directory-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.email-directory-card { min-width:0; padding:26px 25px; background:#fffefa; border:1px solid #ded9c9; display:flex; flex-direction:column; gap:11px; }
+.email-directory-card .mini-label { color:#8e741f; }
+.email-directory-card a { display:flex; align-items:center; justify-content:space-between; gap:6px; color:#202a21; font:700 clamp(15px,1.18vw,17px)/1.45 var(--ui); overflow-wrap:anywhere; text-decoration:underline; text-decoration-color:#bca33d; text-underline-offset:4px; }
+.email-directory-card a svg { flex:0 0 auto; color:#9b7910; }
+.email-directory-card p { color:#546056; font-size:var(--type-card); line-height:1.65; margin:0; }
+@media(max-width:960px) { .contact-route-wrap { grid-template-columns:1fr; gap:25px; } .email-directory-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:640px) { .contact-route-section { padding:45px 0; } .email-directory-grid { grid-template-columns:1fr; } .contact-route-grid { grid-template-columns:1fr; } .contact-route-card strong { font-size:16px; } }

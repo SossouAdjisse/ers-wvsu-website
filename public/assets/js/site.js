@@ -48,10 +48,12 @@
   form.addEventListener('submit', event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
-    const recipient = form.dataset.recipient;
-    if (!recipient || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)) return;
     const data = new FormData(form);
     const v = key => String(data.get(key) || '').trim();
+    let routes = {};
+    try { routes = JSON.parse(form.dataset.recipientMap || '{}'); } catch (_) {}
+    const recipient = routes[v('inquiry_type')] || form.dataset.recipient;
+    if (!recipient || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)) return;
     const subject = `ERS–WVSU research inquiry: ${v('inquiry_type')}`;
     const body = [
       'ERS–WVSU Research Inquiry', '',

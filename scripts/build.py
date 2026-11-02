@@ -159,17 +159,74 @@ def nav_html(active):
 </div></header>'''
 
 
+def channel_address(channel):
+    """Public ERS email addresses; forwarding itself remains configured in Porkbun."""
+    key='contact_email' if channel=='contact' else 'email_'+channel
+    value=str(SITE.get(key,'')).strip()
+    return value if valid_mail(value) else ''
+
+
+def channel_link(channel, text=None, css_class='inline-link'):
+    address=channel_address(channel)
+    if not address: return ''
+    return f'<a class="{e(css_class)}" href="mailto:{e(address)}">{e(text or address)}</a>'
+
+
+def contact_strip(title, introduction, channels):
+    cards=[]
+    for channel,label in channels:
+        address=channel_address(channel)
+        if not address: continue
+        cards.append(f'<a class="contact-route-card" href="mailto:{e(address)}">'
+                     f'<span class="contact-route-label">{e(label)}</span>'
+                     f'<strong>{e(address)}</strong>{icon("up-right",16)}</a>')
+    if not cards: return ''
+    return (f'<section class="section contact-route-section"><div class="container contact-route-wrap">'
+            f'<div class="contact-route-header">{eyebrow("CONTACT THE RELEVANT TEAM")}'
+            f'<h2>{e(title)}</h2><p>{e(introduction)}</p></div>'
+            f'<div class="contact-route-grid">{"".join(cards)}</div></div></section>')
+
+
+def email_directory():
+    entries=[
+        ('contact','General inquiries','General questions about ERS–WVSU.'),
+        ('seminars','Seminars & events','Seminar proposals, schedules, and presentations.'),
+        ('speakers','Speaker relations','Speaker invitations, biographies, and past talks.'),
+        ('partnerships','Research partnerships','Collaborative projects across disciplines and institutions.'),
+        ('research','Research & methods','Economics, quantitative analysis, and causal inference.'),
+        ('grants','Grants & funding','Collaborative research proposals and funding discussions.'),
+        ('students','Student research','Student project submissions and research spotlight.'),
+        ('mentorship','Research mentorship','Mentoring and skill-building opportunities.'),
+        ('outreach','Outreach','Community and external engagement.'),
+    ]
+    cards=[]
+    for channel,label,desc in entries:
+        address=channel_address(channel)
+        if not address: continue
+        cards.append(f'<article class="email-directory-card"><span class="mini-label">{e(label)}</span>'
+                     f'<a href="mailto:{e(address)}">{e(address)} {icon("up-right",16)}</a>'
+                     f'<p>{e(desc)}</p></article>')
+    return (f'<section class="section email-directory-section" id="email-directory">'
+            f'<div class="container">{section_label("03","DIRECT CONTACT DIRECTORY")}'
+            f'<div class="section-heading-row"><h2>Find the right<br><em>point of contact.</em></h2>'
+            f'<p>Choose the address that best fits your inquiry. Each address is managed by the ERS–WVSU team; '
+            f'please send confidential research details only after agreeing on an appropriate channel.</p></div>'
+            f'<div class="email-directory-grid">{"".join(cards)}</div></div></section>')
+
+
 def footer_html():
     nav = ''.join(f'<a href="{e(internal(path))}">{e(label)}</a>' for path,label,key in NAV if key!='home') + f'<a href="{e(internal("archive/"))}">Research resources</a>'
     uni = remote_url(SITE.get('university_url',''))
     right = f'<a href="{e(uni)}" target="_blank" rel="noopener noreferrer">West Virginia State University {icon("up-right", 14)}</a>' if uni else ''
     mail = SITE.get('contact_email','').strip()
     contact = f'<a href="mailto:{e(mail)}">{e(mail)}</a>' if valid_mail(mail) else '<span>Contact details forthcoming</span>'
+    seminars=channel_link('seminars')
+    partners=channel_link('partnerships')
     year = dt.date.today().year
     return f'''<footer class="footer"><div class="container"><div class="footer-grid">
 <div class="footer-intro">{eyebrow('STRONGER EVIDENCE THROUGH COLLABORATION',True)}<h2>More rigorous questions.<br><em>More useful evidence.</em></h2><p>{e(SITE.get('footer_note',''))}</p></div>
 <div class="footer-linkcol"><h3>EXPLORE</h3>{nav}</div>
-<div class="footer-linkcol"><h3>CONNECT</h3><a href="{e(internal('get-involved/'))}">Present your research {icon('up-right',14)}</a>{contact}{right}</div>
+<div class="footer-linkcol"><h3>CONNECT</h3><a href="{e(internal('get-involved/'))}">Present your research {icon('up-right',14)}</a>{contact}{seminars}{partners}{right}</div>
 </div><div class="footer-bottom"><span>© {year} ERS–WVSU. Website content maintained by the seminar organizers.</span><span>Faculty-led research initiative · Branding pending institutional review.</span></div></div></footer>'''
 
 
@@ -288,7 +345,9 @@ def render_partnerships():
 <section class="section section--sand" id="collaboration-path"><div class="container">{section_label('02','HOW COLLABORATION WORKS')}<div class="section-heading-row"><h2>{e(c['pathway_heading'])}</h2><p>{e(c['pathway_intro'])}</p></div><div class="pathway-grid">{pathway_cards()}</div></div></section>
 <section class="section fit-section" id="research-fit"><div class="container fit-grid"><div>{section_label('03','WHO SHOULD PRESENT')}<h2>{e(c['fit_heading'])}</h2><p class="lead-paragraph">{e(c['fit_intro'])}</p><div class="fit-tip">A project <strong>does not need a finished economics component</strong> to qualify. It does need a plausible opportunity for one.</div></div><div class="fit-list">{checks}</div></div></section>
 <section class="section campus-section"><div class="container campus-grid"><div>{section_label('04','RESEARCH CONTEXT AT WVSU')}<h2>{e(c['campus_title'])}</h2></div><div><p class="lead-paragraph">{e(c['campus_text'])}</p>{source}</div></div></section>
-<section class="section partner-cta"><div class="container partner-cta-grid"><div>{section_label('05','WORK WITH ERS–WVSU')}<h2>Have a question<br><em>that could become stronger?</em></h2><p>We welcome initial conversations about the economic or empirical contribution to your work.</p></div>{button('Propose a collaboration',internal('get-involved/#propose'))}</div></section>'''
+<section class="section partner-cta"><div class="container partner-cta-grid"><div>{section_label('05','WORK WITH ERS–WVSU')}<h2>Have a question<br><em>that could become stronger?</em></h2><p>We welcome initial conversations about the economic or empirical contribution to your work.</p></div>{button('Propose a collaboration',internal('get-involved/#propose'))}</div></section>'''+contact_strip(
+    'Collaborate with ERS–WVSU', 'Connect directly about partnership development, empirical research, or proposals.',
+    [('partnerships','Research partnerships'),('research','Economic analysis & methods'),('grants','Research grants')])
 
 
 def render_seminars():
@@ -308,7 +367,9 @@ def render_seminars():
 <section class="section events-main"><div class="container">
 <div class="section-heading-row section-heading-row--event">{section_label('01','UPCOMING SESSIONS')}<span class="muted-note">All times Eastern · Institute, West Virginia</span></div><div class="events-list">{upcoming_html}</div>
 <div class="past-header">{section_label('02','PAST SESSIONS')}<h2>Conversations worth<br><em>revisiting.</em></h2></div><div class="events-list">{past_html}</div><div class="extra-link-row">{button('Meet past speakers',internal('past-speakers/'),'outline-dark')}</div></div></section>
-<section class="section section--sand"><div class="container format-grid"><div class="format-art">{icon('target',76)}<span>ECONOMICS · DATA · CAUSAL IDENTIFICATION</span></div><div>{section_label('03','THE SEMINAR FORMAT')}<h2>{e(c['format_title'])}</h2><p class="lead-paragraph">{e(c['format_text'])}</p>{button('Presentation criteria',internal('partnerships/#research-fit'))}</div></div></section>'''
+<section class="section section--sand"><div class="container format-grid"><div class="format-art">{icon('target',76)}<span>ECONOMICS · DATA · CAUSAL IDENTIFICATION</span></div><div>{section_label('03','THE SEMINAR FORMAT')}<h2>{e(c['format_title'])}</h2><p class="lead-paragraph">{e(c['format_text'])}</p>{button('Presentation criteria',internal('partnerships/#research-fit'))}</div></div></section>'''+contact_strip(
+    'Interested in presenting?', 'Contact the seminar team for schedules, submissions, and speaker coordination.',
+    [('seminars','Seminar proposals'),('speakers','Speaker invitations')])
 
 
 def speaker_card(sp):
@@ -328,7 +389,9 @@ def render_speakers():
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section"><div class="container">{section_label('01','ORGANIZERS & PARTICIPANTS')}<div class="section-heading-row speaker-index-heading"><h2>Researchers building<br><em>the conversation.</em></h2><label class="search-input">{icon('search',18)}<span class="sr-only">Search speakers</span><input type="search" placeholder="Search names and interests" data-filter-input aria-label="Search speakers"></label></div>
 <div class="speaker-grid" data-filter-target>{cards}</div><p class="filter-empty" data-filter-empty hidden>No profiles match that search. Try another term.</p><div class="extra-link-row">{button("Explore past presenters",internal("past-speakers/"),"outline-dark")}</div></div></section>
-<section class="section section--sand"><div class="container invitation-band"><div>{section_label('02','SPEAKER INVITATION')}<h2>{e(c['invitation_title'])}</h2><p>{e(c['invitation_text'])}</p></div>{button('Become a speaker',internal('get-involved/#propose'))}</div></section>'''
+<section class="section section--sand"><div class="container invitation-band"><div>{section_label('02','SPEAKER INVITATION')}<h2>{e(c['invitation_title'])}</h2><p>{e(c['invitation_text'])}</p></div>{button('Become a speaker',internal('get-involved/#propose'))}</div></section>'''+contact_strip(
+    'Contact the speaker team', 'For prospective speakers or profile updates.',
+    [('speakers','Speaker relations')])
 
 
 
@@ -341,7 +404,9 @@ def render_past_speakers():
         cards='<div class="empty-state"><h3>Our past-speaker archive is being developed.</h3><p>Verified profiles will appear here.</p></div>'
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section"><div class="container">{section_label('01','THE SEMINAR COMMUNITY')}<div class="section-heading-row"><h2>{e(c['section_heading'])}</h2><p>{e(c['section_intro'])}</p></div><div class="past-speaker-grid">{cards}</div><p class="archive-note">Presentations are summarized by topic; precise dates and materials will be added after confirmation.</p></div></section>
-<section class="section section--sand"><div class="container invitation-band"><div>{section_label('02','SHARE YOUR WORK')}<h2>Bring a question worth exploring.</h2><p>Presentations are selected for opportunities to add economic reasoning, meaningful data analysis, or credible causal interpretation.</p></div>{button('Propose a seminar',internal('get-involved/#propose'))}</div></section>'''
+<section class="section section--sand"><div class="container invitation-band"><div>{section_label('02','SHARE YOUR WORK')}<h2>Bring a question worth exploring.</h2><p>Presentations are selected for opportunities to add economic reasoning, meaningful data analysis, or credible causal interpretation.</p></div>{button('Propose a seminar',internal('get-involved/#propose'))}</div></section>'''+contact_strip(
+    'About a past presentation?', 'Request a correction or discuss future seminar participation.',
+    [('speakers','Past speakers & invitations')])
 
 
 def render_students():
@@ -360,7 +425,9 @@ def render_students():
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section student-spotlight-section"><div class="container">{section_label('01','STUDENT RESEARCH SPOTLIGHT')}<div class="section-heading-row"><h2>{e(c['spotlight_title'])}</h2><p>{e(c['spotlight_intro'])}</p></div><div class="student-project-grid">{''.join(cards)}</div><p class="archive-note">Student names, work, and photographs are shared only with appropriate permission; inclusion is subject to review.</p></div></section>
 <section class="section section--sand"><div class="container">{section_label('02','MENTORSHIP THROUGH RESEARCH')}<div class="section-heading-row"><h2>{e(c['mentorship_title'])}</h2><p>{e(c['mentorship_intro'])}</p></div><div class="student-mentorship-grid">{steps}</div></div></section>
-<section class="section partner-cta"><div class="container partner-cta-grid"><div>{section_label('03','GET STARTED')}<h2>{e(c['closing_title'])}</h2><p>{e(c['closing_text'])}</p></div>{button('Discuss a student project',internal('get-involved/#propose'))}</div></section>'''
+<section class="section partner-cta"><div class="container partner-cta-grid"><div>{section_label('03','GET STARTED')}<h2>{e(c['closing_title'])}</h2><p>{e(c['closing_text'])}</p></div>{button('Discuss a student project',internal('get-involved/#propose'))}</div></section>'''+contact_strip(
+    'Support for emerging researchers', 'Connect about student projects, research spotlight submissions, and mentoring.',
+    [('students','Student research spotlight'),('mentorship','Research mentorship')])
 
 def render_archive():
     c=PAGES['archive']
@@ -380,7 +447,9 @@ def render_archive():
         catalog=f'''<div class="empty-state empty-state--large"><div class="empty-state__icon">{icon('book',31)}</div><div><p class="mini-label">CURATING OUR LIBRARY</p><h3>{e(c['empty_title'])}</h3><p>{e(c['empty_text'])}</p></div></div>'''
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section"><div class="container">{section_label('01','PUBLISHED MATERIALS')}<div class="section-heading-row"><h2>Explore the<br><em>research archive.</em></h2><p>All shared materials remain the intellectual work of their respective authors.</p></div>{catalog}</div></section>
-<section class="section section--sand"><div class="container">{section_label('02','WHAT YOU WILL FIND')}<div class="resource-type-grid"><div>{icon('speaker',29)}<h3>Talk slides</h3><p>Selected presentations approved by the speakers for public sharing.</p></div><div>{icon('file',29)}<h3>Papers and briefs</h3><p>Working papers and concise research summaries where permission is granted.</p></div><div>{icon('book',29)}<h3>Learning resources</h3><p>Methods, references, and related resources that support learning and collaboration.</p></div></div></div></section>'''
+<section class="section section--sand"><div class="container">{section_label('02','WHAT YOU WILL FIND')}<div class="resource-type-grid"><div>{icon('speaker',29)}<h3>Talk slides</h3><p>Selected presentations approved by the speakers for public sharing.</p></div><div>{icon('file',29)}<h3>Papers and briefs</h3><p>Working papers and concise research summaries where permission is granted.</p></div><div>{icon('book',29)}<h3>Learning resources</h3><p>Methods, references, and related resources that support learning and collaboration.</p></div></div></div></section>'''+contact_strip(
+    'Questions about research materials?', 'Discuss methods, data, or resource sharing with the research team.',
+    [('research','Research & methods')])
 
 
 def render_involved():
@@ -392,15 +461,27 @@ def render_involved():
     addresses=[]
     if valid_mail(email): addresses.append(f'<a href="mailto:{e(email)}">{e(email)}</a>')
     if valid_mail(alternate) and alternate!=email: addresses.append(f'<a href="mailto:{e(alternate)}">{e(alternate)}</a>')
-    emails_markup='<div class="email-options"><span class="mini-label">CONTACT EMAILS</span>'+''.join(addresses)+'</div>' if addresses else ''
+    emails_markup='<div class="email-options"><span class="mini-label">GENERAL EMAIL</span>'+''.join(addresses)+'</div>' if addresses else ''
     form_actions=(button('Open Google proposal form',form_url,'gold') if form_url else '')
+    inquiry_routes={
+        'Presenting at a seminar':channel_address('seminars'),
+        'Speaker invitation or past presentation':channel_address('speakers'),
+        'Interdisciplinary research collaboration':channel_address('partnerships'),
+        'Economic analysis, data or causal inference':channel_address('research'),
+        'Grant development or funding':channel_address('grants'),
+        'Student research spotlight':channel_address('students'),
+        'Research mentorship':channel_address('mentorship'),
+        'Outreach or community engagement':channel_address('outreach'),
+        'General question':channel_address('contact'),
+    }
+    route_json=e(json.dumps(inquiry_routes,ensure_ascii=False))
     if valid_mail(email):
-        form=f'''<form class="research-inquiry" id="research-inquiry" data-recipient="{e(email)}"><div class="form-row"><label>Full name <span aria-hidden="true">*</span><input name="name" autocomplete="name" required maxlength="120" placeholder="Your name"></label><label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="you@university.edu"></label></div>
+        form=f'''<form class="research-inquiry" id="research-inquiry" data-recipient="{e(email)}" data-recipient-map="{route_json}"><div class="form-row"><label>Full name <span aria-hidden="true">*</span><input name="name" autocomplete="name" required maxlength="120" placeholder="Your name"></label><label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="you@university.edu"></label></div>
 <label>Affiliation / department<input name="affiliation" maxlength="160" placeholder="Institution or department (optional)"></label>
-<label>I'm interested in <span aria-hidden="true">*</span><select name="inquiry_type" required><option value="">Select an inquiry type</option><option>Presenting at a seminar</option><option>Interdisciplinary research collaboration</option><option>Economic or causal-inference methods</option><option>Student research and mentorship</option><option>Other question</option></select></label>
+<label>I'm interested in <span aria-hidden="true">*</span><select name="inquiry_type" required><option value="">Select an inquiry type</option><option>Presenting at a seminar</option><option>Speaker invitation or past presentation</option><option>Interdisciplinary research collaboration</option><option>Economic analysis, data or causal inference</option><option>Grant development or funding</option><option>Student research spotlight</option><option>Research mentorship</option><option>Outreach or community engagement</option><option>General question</option></select></label>
 <label>Working title or subject<input name="topic" maxlength="180" placeholder="Brief research topic (optional)"></label>
 <label>What would you like to discuss? <span aria-hidden="true">*</span><textarea name="message" required maxlength="1800" rows="5" placeholder="A brief description of your question, evidence, or collaboration idea"></textarea></label>
-<p class="form-note">{icon('mail',16)} This opens your email application with a draft. <strong>You must press Send in your email app.</strong> Nothing is submitted directly through this website.</p>
+<p class="form-note">{icon('mail',16)} Your inquiry is addressed to the relevant ERS–WVSU email. This opens a draft in your email application. <strong>You must press Send there.</strong> No form data is stored on this website.</p>
 <button type="submit" class="btn btn--gold"><span>Prepare email inquiry</span>{icon('up-right',18)}</button><p id="inquiry-status" class="form-status" role="status" aria-live="polite"></p></form>'''
     else:
         form='<p class="form-note">The contact form will become available after an organizer email is set in Site settings.</p>'
@@ -409,7 +490,7 @@ def render_involved():
     cards=''.join(f'''<article class="involvement-card"><span>{e(n)}</span>{icon(ic,29)}<h3>{e(t)}</h3><p>{e(d)}</p></article>''' for n,t,d,ic in routes)
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section"><div class="container">{section_label('01','PATHWAYS TO PARTICIPATE')}<div class="section-heading-row"><h2>There are many ways<br><em>to contribute.</em></h2><p>Participation is open across disciplines, with a clear economics or empirical-research fit.</p></div><div class="involvement-grid">{cards}</div></div></section>
-<section class="section section--sand" id="propose"><div class="container propose-grid"><div>{section_label('02','RESEARCH INQUIRY')}<h2>{e(c['proposal_title'])}</h2><p class="lead-paragraph">{e(c['proposal_text'])}</p><div class="proposal-steps"><div><span>1</span><p><strong>Describe the research question</strong><br>A working title and a brief description of the study.</p></div><div><span>2</span><p><strong>Identify the economics or methods angle</strong><br>Where could theory, data analysis, or causal inference add value?</p></div><div><span>3</span><p><strong>Suggest a collaborative next step</strong><br>Would a seminar, co-design discussion, or methods workshop help?</p></div></div><div class="proposal-context"><strong>For sensitive or unpublished work:</strong> Share only a short nonconfidential summary at first. Detailed ideas can be discussed privately after agreeing on the scope of collaboration.</div></div><div class="contact-panel contact-panel--form" id="contact"><span class="mini-label">CONNECT WITH ERS–WVSU</span><div class="contact-panel__icon">{icon('mail',31)}</div><h3>{e(c['contact_title'])}</h3><p>{e(c['contact_text'])}</p>{form}{form_actions}{emails_markup}<hr><span class="mini-label">FOLLOW FUTURE SEMINARS</span><div class="newsletter-link">{newsletter}</div></div></div></section>'''
+<section class="section section--sand" id="propose"><div class="container propose-grid"><div>{section_label('02','RESEARCH INQUIRY')}<h2>{e(c['proposal_title'])}</h2><p class="lead-paragraph">{e(c['proposal_text'])}</p><div class="proposal-steps"><div><span>1</span><p><strong>Describe the research question</strong><br>A working title and a brief description of the study.</p></div><div><span>2</span><p><strong>Identify the economics or methods angle</strong><br>Where could theory, data analysis, or causal inference add value?</p></div><div><span>3</span><p><strong>Suggest a collaborative next step</strong><br>Would a seminar, co-design discussion, or methods workshop help?</p></div></div><div class="proposal-context"><strong>For sensitive or unpublished work:</strong> Share only a short nonconfidential summary at first. Detailed ideas can be discussed privately after agreeing on the scope of collaboration.</div></div><div class="contact-panel contact-panel--form" id="contact"><span class="mini-label">CONNECT WITH ERS–WVSU</span><div class="contact-panel__icon">{icon('mail',31)}</div><h3>{e(c['contact_title'])}</h3><p>{e(c['contact_text'])}</p>{form}{form_actions}{emails_markup}<hr><span class="mini-label">FOLLOW FUTURE SEMINARS</span><div class="newsletter-link">{newsletter}</div></div></div></section>'''+email_directory()
 
 def render_about():
     c=PAGES['about']
@@ -417,7 +498,9 @@ def render_about():
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
 <section class="section"><div class="container about-story-grid"><div class="about-story-art"><img src="{e(internal('assets/images/hero-network.svg'))}" alt="Abstract golden connections between research ideas" loading="lazy"><span>INQUIRY <b>·</b> EXCHANGE <b>·</b> IMPACT</span></div><div>{section_label('01','OUR MISSION')}<h2>{e(c['mission_title'])}</h2><p class="lead-paragraph">{e(c['mission_text'])}</p><div class="story-quote">“Rigorous collaboration begins with clarity about the question, the evidence, and each team’s contribution.”</div></div></div></section>
 <section class="section section--sand"><div class="container"><div class="section-heading-row">{section_label('02','WHAT GUIDES US')}<h2>Four principles.<br><em>One shared purpose.</em></h2></div><div class="principles-grid">{principles}</div></div></section>
-<section class="section origins-section"><div class="container origins-grid"><div>{section_label('03','HOW IT BEGAN')}<h2>{e(c['origin_title'])}</h2></div><div><p class="lead-paragraph">{e(c['origin_text'])}</p><div class="origin-fact"><span>2026</span><p>ERS–WVSU initiative established</p></div>{button('Be part of the story',internal('get-involved/'))}</div></div></section>'''
+<section class="section origins-section"><div class="container origins-grid"><div>{section_label('03','HOW IT BEGAN')}<h2>{e(c['origin_title'])}</h2></div><div><p class="lead-paragraph">{e(c['origin_text'])}</p><div class="origin-fact"><span>2026</span><p>ERS–WVSU initiative established</p></div>{button('Be part of the story',internal('get-involved/'))}</div></div></section>'''+contact_strip(
+    'Reach ERS–WVSU', 'For general correspondence or community and institutional engagement.',
+    [('contact','General contact'),('outreach','Outreach & engagement')])
 
 
 def render_speaker_detail(sp):

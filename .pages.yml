@@ -20,6 +20,14 @@ content:
       - {name: meta_description, label: Search description, type: text}
       - {name: contact_email, label: Primary contact email, type: string, description: Research inquiry emails will be addressed here via the visitor’s own email app}
       - {name: alternate_contact_email, label: Alternative contact email, type: string, description: Displayed as another direct email option}
+      - {name: email_seminars, label: Seminar proposals email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_speakers, label: Speakers & past talks email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_partnerships, label: Research partnerships email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_research, label: Research & methods email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_grants, label: Grants & funding email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_students, label: Student research email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_mentorship, label: Research mentorship email, type: string, description: Public ERS–WVSU forwarding address}
+      - {name: email_outreach, label: Outreach & engagement email, type: string, description: Public ERS–WVSU forwarding address}
       - {name: proposal_form_url, label: Speaker proposal form URL, type: string, description: Optional full HTTPS URL for a working Google Form}
       - {name: mailing_list_url, label: Mailing list signup URL, type: string, description: Optional full HTTPS URL}
       - {name: custom_domain, label: Custom domain, type: string, description: Only set after configuring GitHub Pages and Porkbun; example www.erswvsu.org}
