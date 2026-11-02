@@ -1,32 +1,32 @@
 [
   {
-    "title": "Agriculture & food systems",
-    "description": "Economic choices, resource use, producer behavior, and agricultural markets.",
+    "title": "AI, Agriculture & Rural Innovation",
+    "description": "Economics of precision farming, technology adoption, cost-effectiveness, productivity, producer decisions, and rural impacts.",
     "icon": "leaf"
   },
   {
-    "title": "Education & human capital",
-    "description": "Learning, skills, opportunity, and evidence on programs that affect outcomes.",
-    "icon": "book"
-  },
-  {
-    "title": "Health & community well-being",
-    "description": "Costs, access, incentives, and the distribution of benefits and risks.",
-    "icon": "users"
-  },
-  {
-    "title": "Technology, work & enterprise",
-    "description": "Innovation, adoption, productivity, entrepreneurship, and labor markets.",
+    "title": "AI, Labor Markets & the Future of Work",
+    "description": "Employment, job tasks, skill demand, productivity, distributional effects, and evidence on transitions linked to AI.",
     "icon": "briefcase"
   },
   {
-    "title": "Environment & regional resilience",
-    "description": "Economic trade-offs, natural resources, shocks, and Appalachian communities.",
+    "title": "AI, Education & Human Capital",
+    "description": "Evaluation of AI-supported learning, access, educational outcomes, costs, and longer-run opportunities.",
+    "icon": "book"
+  },
+  {
+    "title": "Health & Community Well-Being",
+    "description": "Incentives, program evaluation, access, costs, and the distribution of social outcomes.",
+    "icon": "users"
+  },
+  {
+    "title": "Environment & Regional Resilience",
+    "description": "Resource decisions, economic trade-offs, regional shocks, climate adaptation, and Appalachian development.",
     "icon": "landscape"
   },
   {
-    "title": "Public policy & institutions",
-    "description": "Policy evaluation, institutional incentives, implementation, and welfare.",
+    "title": "Policy, Institutions & Evidence",
+    "description": "Credible evaluation of policy interventions, institutional choices, and their economic effects.",
     "icon": "building"
   }
 ]

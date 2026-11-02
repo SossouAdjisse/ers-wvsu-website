@@ -1,16 +1,19 @@
 {
   "name": "Sossou S. Adjisse, Ph.D.",
   "slug": "sossou-s-adjisse",
-  "role": "Founding organizer · Past presenter",
+  "role": "Lead Coordinator & Co-Initiator",
   "position": "Assistant Professor of Economics",
   "affiliation": "West Virginia State University",
   "expertise": "Applied economics; causal inference; development and public policy",
-  "bio": "Dr. Sossou S. Adjisse is an assistant professor of economics at West Virginia State University and a member of the organizing effort behind ERS–WVSU. His research interests include applied economics, policy evaluation, and the use of evidence to understand economic and social outcomes.",
+  "bio": "Dr. Sossou S. Adjisse is an Assistant Professor of Economics at West Virginia State University and Lead Coordinator and Co-Initiator of ERS–WVSU. His research spans applied economics, policy evaluation, and causal inference. He coordinates the seminar program and research-development activities.",
   "website_url": "https://www.sossouadjisse.com",
   "photo": "",
   "status": "published",
   "sort_order": 1,
   "past_speaker": true,
   "past_talk": "Economics as a Meeting Place: Research, Collaboration, and Student Opportunity",
-  "past_talk_note": "September 24, 2026 | 12:30–1:30 p.m. EDT. Inaugural ERS–WVSU seminar introducing the research exchange and interdisciplinary collaboration opportunities."
+  "past_talk_note": "September 24, 2026 | 12:30–1:30 p.m. EDT. Inaugural ERS–WVSU seminar introducing the research exchange and interdisciplinary collaboration opportunities.",
+  "past_talk_date": "2026-09-24",
+  "past_talk_time": "12:30–1:30 p.m. EDT",
+  "past_talk_summary": "The inaugural seminar introduced ERS–WVSU as an economics-centered forum where faculty and students can turn disciplinary questions into more rigorous economic and empirical research. The presentation outlined opportunities for economic framing, data analysis, causal inference, student engagement, and collaborative research across the university."
 }

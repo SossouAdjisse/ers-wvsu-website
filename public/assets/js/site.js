@@ -41,31 +41,51 @@
   if (select) select.addEventListener('change', refresh);
 })();
 
-/* Local, serverless research-inquiry form. Intentionally does not claim to send mail. */
+/* ERS–WVSU V5: direct Formspree submissions with accessible progress & confirmation. */
 (() => {
   const form = document.getElementById('research-inquiry');
-  if (!form) return;
-  form.addEventListener('submit', event => {
+  if (!form || form.dataset.formspree !== 'true') return;
+  const status = document.getElementById('inquiry-status');
+  const button = document.getElementById('inquiry-submit');
+  const label = button?.querySelector('span');
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
-    const data = new FormData(form);
-    const v = key => String(data.get(key) || '').trim();
-    let routes = {};
-    try { routes = JSON.parse(form.dataset.recipientMap || '{}'); } catch (_) {}
-    const recipient = routes[v('inquiry_type')] || form.dataset.recipient;
-    if (!recipient || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)) return;
-    const subject = `ERS–WVSU research inquiry: ${v('inquiry_type')}`;
-    const body = [
-      'ERS–WVSU Research Inquiry', '',
-      `Name: ${v('name')}`, `Email: ${v('email')}`,
-      `Affiliation: ${v('affiliation') || 'Not provided'}`,
-      `Inquiry type: ${v('inquiry_type')}`,
-      `Topic: ${v('topic') || 'Not provided'}`,
-      '', 'Research question / request:', v('message'), '',
-      'Prepared through the ERS–WVSU website.'
-    ].join('\r\n');
-    const status = document.getElementById('inquiry-status');
-    if (status) status.textContent = 'Your email app should open with the draft. Please review it and press Send there. If nothing opens, use the email address shown below.';
-    window.location.href = 'mailto:' + recipient + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    if (!/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(form.action)) {
+      if (status) status.textContent = 'The submission service is not configured correctly. Please use the ERS contact email below.';
+      return;
+    }
+    if (button) button.disabled = true;
+    if (label) label.textContent = 'Submitting your inquiry…';
+    if (status) { status.textContent = 'Submitting securely…'; status.dataset.state = 'pending'; }
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.reset();
+        if (status) {
+          status.textContent = 'Thank you. Your inquiry has been submitted to the ERS–WVSU team.';
+          status.dataset.state = 'success';
+        }
+      } else {
+        let message = 'The submission could not be completed. Please try again or email contact@erswvsu.com.';
+        try {
+          const data = await response.json();
+          if (Array.isArray(data.errors) && data.errors.length) {
+            const details = data.errors.map(item => item.message).filter(Boolean).join(' ');
+            if (details) message = details;
+          }
+        } catch (_) {}
+        if (status) { status.textContent = message; status.dataset.state = 'error'; }
+      }
+    } catch (_) {
+      if (status) { status.textContent = 'Unable to reach the submission service. Please try again or contact contact@erswvsu.com.'; status.dataset.state = 'error'; }
+    } finally {
+      if (button) button.disabled = false;
+      if (label) label.textContent = 'Submit research inquiry';
+    }
   });
 })();

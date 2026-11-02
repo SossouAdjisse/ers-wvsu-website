@@ -3,7 +3,7 @@
   "short_name": "ERS–WVSU",
   "institution": "West Virginia State University",
   "strapline": "Economics-centered research exchange",
-  "meta_description": "ERS–WVSU connects disciplinary experts with economic reasoning, applied data analysis, and causal inference to strengthen interdisciplinary research at West Virginia State University.",
+  "meta_description": "ERS–WVSU is an economics-centered seminar and research development community at West Virginia State University, connecting disciplinary expertise with economics, data analysis, causal inference, and applied AI evaluation.",
   "contact_email": "contact@erswvsu.com",
   "proposal_form_url": "",
   "mailing_list_url": "",
@@ -18,5 +18,7 @@
   "email_grants": "grants@erswvsu.com",
   "email_students": "students@erswvsu.com",
   "email_mentorship": "mentorship@erswvsu.com",
-  "email_outreach": "outreach@erswvsu.com"
+  "email_outreach": "outreach@erswvsu.com",
+  "formspree_endpoint": "https://formspree.io/f/xjyypppg",
+  "mailing_list_provider": "Brevo (planned)"
 }

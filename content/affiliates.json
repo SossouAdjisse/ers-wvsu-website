@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Dr. Clinton Arnold",
+    "slug": "clinton-arnold",
+    "position": "Assistant Professor; Chair, Business Administration",
+    "affiliation": "West Virginia State University",
+    "participation": "Seminar participant and supporter",
+    "sort_order": 1,
+    "status": "published"
+  },
+  {
+    "name": "Dr. Michael Young",
+    "slug": "michael-young",
+    "position": "Associate Professor",
+    "affiliation": "West Virginia State University",
+    "participation": "Seminar participant and supporter",
+    "sort_order": 2,
+    "status": "published"
+  },
+  {
+    "name": "Jonathan Austin",
+    "slug": "jonathan-austin",
+    "position": "Business faculty / instructor",
+    "affiliation": "West Virginia State University",
+    "participation": "Seminar participant and supporter",
+    "sort_order": 3,
+    "status": "published"
+  },
+  {
+    "name": "Austin O’Connor",
+    "slug": "austin-oconnor",
+    "position": "Assistant Professor of Business",
+    "affiliation": "West Virginia State University",
+    "participation": "Seminar participant and supporter",
+    "sort_order": 4,
+    "status": "published"
+  }
+]

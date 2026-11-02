@@ -807,3 +807,144 @@ h3 { line-height:1.25; }
 .email-directory-card p { color:#546056; font-size:var(--type-card); line-height:1.65; margin:0; }
 @media(max-width:960px) { .contact-route-wrap { grid-template-columns:1fr; gap:25px; } .email-directory-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:640px) { .contact-route-section { padding:45px 0; } .email-directory-grid { grid-template-columns:1fr; } .contact-route-grid { grid-template-columns:1fr; } .contact-route-card strong { font-size:16px; } }
+
+/* ===========================================================
+   ERS–WVSU V5: two-row navigation, readability, warm gold bands,
+   research community, accessible submissions and newsletter.
+   Design values remain editable in content/appearance.json.
+   =========================================================== */
+html { scroll-padding-top: 188px; }
+.site-header { position:sticky; top:0; z-index:150; background:var(--cream); }
+.header-brand-row { display:flex; align-items:center; gap:26px; min-height:108px; }
+.header-brand-row .brand { flex:0 1 auto; gap:17px; }
+.header-brand-row .brand-mark { font-size:36px; flex-shrink:0; }
+.header-brand-row .brand-rule { height:56px; }
+.header-brand-row .brand-name { font:700 23px/1.2 var(--sans); letter-spacing:-.025em; }
+.header-brand-row .brand-name span { display:block; margin-top:5px; font:400 17px/1.42 var(--sans); color:#515a52; letter-spacing:0; }
+.header-purpose { margin-left:auto; color:#555b51; font:700 11px/1.6 var(--sans); letter-spacing:.08em; text-align:right; }
+.header-purpose span { color:#b59026; padding:0 5px; }
+.site-nav-row { border-top:1px solid #ddd7c7; border-bottom:1px solid #e6e0ce; background:var(--sand); }
+.site-nav-inner { display:flex; align-items:center; justify-content:center; min-height:56px; }
+.site-nav-row .primary-nav { display:flex; position:static; flex-direction:row; align-items:center; justify-content:space-between; width:100%; gap:12px; padding:0; background:none; border:0; box-shadow:none; }
+.site-nav-row .nav-link { font:700 var(--type-nav)/1.4 var(--sans); color:#30382f; padding:16px 8px; min-width:0; }
+.site-nav-row .nav-link.is-active::after { height:3px; bottom:6px; }
+.site-nav-row .nav-link:focus-visible,.header-brand-row .brand:focus-visible { outline:3px solid #bc9424; outline-offset:3px; }
+
+/* Muted gold ribbon across broad dark backgrounds; maintain legible text */
+.home-hero,.page-hero--dark,.region-section,.partner-cta,.detail-hero,.footer { position:relative; isolation:isolate; }
+.home-hero::before,.page-hero--dark::before,.region-section::before,.partner-cta::before,.detail-hero::before,.footer::before {
+  content:""; position:absolute; left:0; right:0; top:49%; height:46px;
+  pointer-events:none; z-index:0;
+  background:linear-gradient(90deg,rgba(207,171,43,.05),rgba(207,171,43,.21) 36%,rgba(207,171,43,.28) 67%,rgba(207,171,43,.07));
+  border-top:1px solid rgba(222,184,60,.19); border-bottom:1px solid rgba(222,184,60,.19);
+}
+.home-hero__grid,.page-hero__inner,.region-grid,.partner-cta-grid,.detail-hero > .container,.footer > .container { position:relative; z-index:2; }
+.page-hero--dark::after,.region-section::after { z-index:1; }
+
+/* Expanded body and smaller interface text */
+body { font-size:var(--type-body); }
+.home-hero__intro,.page-hero__intro { font-size:clamp(18px,1.4vw,21px); }
+.brand-name,.nav-link,.contact-panel { -webkit-font-smoothing:antialiased; }
+.eyebrow,.section-label,.mini-label,.overline { font-size:var(--type-small); }
+.section-heading-row>p,.lead-paragraph { font-size:clamp(18px,1.32vw,20px); }
+.site-announcement { font-size:12px; }
+.announcement-inner { min-height:38px; }
+.btn { font-size:15px; }
+.contact-panel h3 { font-size:clamp(29px,2.6vw,37px); }
+.contact-panel p { font-size:16px; }
+.footer-intro p,.footer-linkcol a,.footer-linkcol span { font-size:15px; }
+.footer-linkcol h3,.footer-bottom { font-size:12px; }
+.event-meta,.event-presenter { font-size:16px; }
+
+/* People: equal-profile founding team, participating supporters, future roles */
+.leader-grid { gap:22px; }
+.leader-grid .speaker-card { box-shadow:0 7px 20px rgba(30,31,24,.035); }
+.leader-grid .speaker-card__text .mini-label { font-size:14px; letter-spacing:.045em; line-height:1.55; }
+.people-note { margin:24px 0 0; color:#4c574d; font-size:15px; line-height:1.7; max-width:980px; }
+.affiliate-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:15px; }
+.affiliate-card { min-width:0; padding:27px 23px; background:#fffefa; border:1px solid #d9d0b6; display:flex; flex-direction:column; }
+.affiliate-dot { width:34px; height:4px; background:var(--gold); margin-bottom:24px; }
+.affiliate-card h3 { font:700 22px/1.3 var(--sans); margin:0 0 12px; overflow-wrap:anywhere; }
+.affiliate-card p { margin:0 0 11px; color:#525e53; font-size:15px; line-height:1.6; }
+.affiliate-position { color:#28342b!important; font-weight:600; }
+.affiliate-status { display:block; border-top:1px solid #e4dfd4; padding-top:13px; margin-top:auto; font:700 13px/1.5 var(--sans); color:#735f1b; }
+.community-role-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:17px; }
+.community-role { border:1px solid #dcd4c5; background:#fffefa; padding:28px; min-height:245px; }
+.role-index { display:inline-flex; font:700 14px var(--sans); color:#77611c; margin-bottom:35px; }
+.community-role h3 { font-size:22px; line-height:1.3; margin:0 0 15px; }
+.community-role p { font-size:var(--type-card); line-height:1.7; color:#465147; margin:0; }
+.past-speaker-card__talk .mini-label { font-size:14px; color:#8b6e1b; }
+.past-speaker-card__talk .talk-summary { color:#404a40; font-size:var(--type-card); }
+.talk-profile { display:grid; grid-template-columns:.9fr 1.1fr; gap:45px; }
+.talk-profile h2 { font-size:clamp(30px,3vw,43px); line-height:1.2; }
+.talk-profile .talk-date { font:700 16px/1.6 var(--sans); color:#8e6c10; }
+
+/* Direct online inquiry */
+.research-inquiry .consent-check { display:flex; align-items:flex-start; gap:12px; font-size:14px; line-height:1.6; }
+.research-inquiry .consent-check input { flex:0 0 auto; width:20px; min-width:20px; height:20px; margin:3px 0 0; accent-color:#CFAB2B; }
+.research-inquiry .consent-check span { color:#e6ecdf; font-weight:400; }
+.hp-wrap { position:absolute!important; width:1px!important; height:1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; }
+.research-inquiry .btn:disabled { opacity:.65; cursor:progress; }
+.form-status { min-height:1.7em; font:600 15px/1.6 var(--sans); }
+.form-status[data-state="success"] { color:#cfecc0; }
+.form-status[data-state="error"] { color:#ffd0ba; }
+.form-status[data-state="pending"] { color:#eae2bb; }
+
+/* Mailing list: intentionally not yet active until Brevo is configured */
+.newsletter-feature { background:#eee7d3; border-top:4px solid #cfab2b; }
+.newsletter-feature__grid { display:grid; grid-template-columns:1.2fr .8fr; gap:80px; align-items:center; }
+.newsletter-feature h2 { margin-bottom:20px; }
+.newsletter-feature h2 em { color:#956f17; }
+.newsletter-feature p { color:#475349; font-size:var(--type-body); line-height:1.75; max-width:700px; }
+.newsletter-feature__action { padding:38px; background:#fffcf3; border:1px solid #d9ceb2; }
+.newsletter-feature__action p { font-size:15px; margin:18px 0 0; }
+.newsletter-pending { display:block; color:#675524; font:700 18px/1.55 var(--sans); }
+.newsletter-feature__action .inline-link { white-space:normal; }
+
+@media(max-width:1180px) {
+ .header-purpose { font-size:10px; }
+ .header-brand-row .brand-name { font-size:21px; }
+ .site-nav-row .nav-link { padding:15px 5px; }
+}
+@media(max-width:1050px) {
+ html { scroll-padding-top:110px; }
+ .header-brand-row { min-height:89px; padding-block:9px; }
+ .header-brand-row .brand-name { font-size:21px; }
+ .header-brand-row .brand-name span { font-size:15px; }
+ .header-purpose { display:none; }
+ .site-header { position:sticky; }
+ .menu-toggle { display:block; margin-left:auto; flex-shrink:0; }
+ .site-nav-row { position:absolute; top:100%; left:0; right:0; border:0; box-shadow:none; background:transparent; }
+ .site-nav-inner { min-height:0; padding-inline:0; }
+ .site-nav-row .primary-nav { display:none; flex-direction:column; align-items:stretch; justify-content:flex-start; width:100%; background:var(--cream); padding:12px 24px 21px; box-shadow:0 18px 24px #0002; border-bottom:2px solid #cfab2b; gap:0; }
+ .site-nav-row .primary-nav.is-open { display:flex; }
+ .site-nav-row .nav-link { font-size:17px; padding:12px 8px; border-bottom:1px solid #e8dfcb; }
+ .affiliate-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .community-role-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .newsletter-feature__grid { grid-template-columns:1fr; gap:18px; }
+}
+@media(max-width:640px) {
+ html { scroll-padding-top:94px; }
+ .header-brand-row { min-height:76px; padding-block:9px; gap:8px; }
+ .header-brand-row .brand { gap:9px; min-width:0; }
+ .header-brand-row .brand-mark { font-size:27px; }
+ .header-brand-row .brand-rule { height:44px; }
+ .header-brand-row .brand-name { font-size:clamp(14px,4vw,19px); line-height:1.18; }
+ .header-brand-row .brand-name span { font-size:clamp(12px,3.3vw,14px); line-height:1.3; margin-top:4px; }
+ .site-nav-row .nav-link { font-size:17px; }
+ .home-hero::before,.page-hero--dark::before,.region-section::before,.partner-cta::before,.detail-hero::before,.footer::before { height:30px; top:48%; }
+ .affiliate-grid,.community-role-grid,.talk-profile,.newsletter-feature__grid { grid-template-columns:1fr; }
+ .affiliate-card,.community-role,.newsletter-feature__action { padding:23px; }
+ .newsletter-feature h2 { font-size:clamp(33px,9vw,45px); }
+ .research-inquiry .consent-check { font-size:14px; }
+ .page-hero__intro { font-size:18px; }
+ .contact-panel p { font-size:15px; }
+}
+/* Responsive refinement: the featured seminar block must stack on tablets and phones. */
+@media(max-width:1050px) {
+ .next-grid { grid-template-columns:minmax(0,1fr); gap:32px; }
+ .next-grid > * { min-width:0; max-width:100%; }
+ .research-visual { max-width:560px; width:100%; }
+ .next-panel__top { flex-wrap:wrap; }
+ .next-panel__date { margin-left:0; }
+}

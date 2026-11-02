@@ -18,7 +18,7 @@ content:
       - {name: institution, label: Institution, type: string}
       - {name: strapline, label: Header strapline, type: string}
       - {name: meta_description, label: Search description, type: text}
-      - {name: contact_email, label: Primary contact email, type: string, description: Research inquiry emails will be addressed here via the visitor’s own email app}
+      - {name: contact_email, label: Primary contact email, type: string, description: Public ERS–WVSU address. The live Formspree submission form uses its separate endpoint and verified recipient settings}
       - {name: alternate_contact_email, label: Alternative contact email, type: string, description: Displayed as another direct email option}
       - {name: email_seminars, label: Seminar proposals email, type: string, description: Public ERS–WVSU forwarding address}
       - {name: email_speakers, label: Speakers & past talks email, type: string, description: Public ERS–WVSU forwarding address}
@@ -28,8 +28,10 @@ content:
       - {name: email_students, label: Student research email, type: string, description: Public ERS–WVSU forwarding address}
       - {name: email_mentorship, label: Research mentorship email, type: string, description: Public ERS–WVSU forwarding address}
       - {name: email_outreach, label: Outreach & engagement email, type: string, description: Public ERS–WVSU forwarding address}
-      - {name: proposal_form_url, label: Speaker proposal form URL, type: string, description: Optional full HTTPS URL for a working Google Form}
-      - {name: mailing_list_url, label: Mailing list signup URL, type: string, description: Optional full HTTPS URL}
+      - {name: formspree_endpoint, label: Formspree direct submission endpoint, type: string, description: Verified public endpoint for on-page inquiry submission; keep Formspree recipient set to contact@erswvsu.com}
+      - {name: proposal_form_url, label: Legacy external proposal form (not currently used), type: string, description: Reserved for any future external option}
+      - {name: mailing_list_url, label: Brevo mailing list signup URL, type: string, description: Leave blank until the form is created, verified and ready for public launch}
+      - {name: mailing_list_provider, label: Mailing list provider label, type: string}
       - {name: custom_domain, label: Custom domain, type: string, description: Only set after configuring GitHub Pages and Porkbun; example www.erswvsu.org}
       - {name: university_url, label: WVSU website URL, type: string}
       - {name: footer_note, label: Footer note, type: text}
@@ -245,6 +247,31 @@ content:
       - {name: title, type: string, required: true}
       - {name: description, type: text}
 
+  - name: affiliates
+    label: Research affiliates & supporters
+    type: file
+    path: content/affiliates.json
+    format: json
+    list: true
+    fields:
+      - {name: name, type: string, required: true}
+      - {name: slug, type: string, required: true}
+      - {name: position, type: string}
+      - {name: affiliation, type: string}
+      - {name: participation, type: string}
+      - {name: sort_order, type: number}
+      - {name: status, type: select, options: {values: [draft, published]}}
+
+  - name: community_roles
+    label: Open participation roles
+    type: file
+    path: content/community-roles.json
+    format: json
+    list: true
+    fields:
+      - {name: title, type: string, required: true}
+      - {name: description, type: text}
+
   - name: events
     label: Seminar events
     type: collection
@@ -262,6 +289,7 @@ content:
       - {name: date, type: date, default: "", options: {format: yyyy-MM-dd}}
       - {name: start_time, type: string, description: HH:MM in 24-hour format, e.g. 12:30}
       - {name: end_time, type: string, description: HH:MM in 24-hour format}
+      - {name: time_label, type: string, description: Display as 12:30–1:30 p.m. EDT}
       - {name: timezone, type: string, description: Default America/New_York}
       - {name: event_type, type: select, options: {values: [Research seminar, Workshop, Student presentation, Panel discussion]}}
       - {name: topic, type: string}
@@ -300,7 +328,10 @@ content:
       - {name: sort_order, type: number}
       - {name: past_speaker, label: Has presented at ERS–WVSU, type: boolean}
       - {name: past_talk, label: Past presentation topic, type: string}
-      - {name: past_talk_note, label: Short description of previous talk, type: text}
+      - {name: past_talk_note, label: Original talk note (retain for history), type: text}
+      - {name: past_talk_date, label: Past talk date (YYYY-MM-DD), type: string}
+      - {name: past_talk_time, label: Public talk time e.g. 12:30–1:30 p.m. EDT, type: string}
+      - {name: past_talk_summary, label: Public seminar summary (avoid unverified results), type: text}
 
   - name: student_projects
     label: Student research projects
