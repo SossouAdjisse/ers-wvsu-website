@@ -249,24 +249,19 @@ content:
       - {name: description, type: text}
 
   - name: affiliates
-    label: Research affiliates & supporters
+    label: People — research & seminar community
     type: file
     path: content/affiliates.json
     format: json
     list: true
     fields:
-      - {name: name, type: string, required: true}
+      - {name: name, label: Name with one credential, type: string, required: true}
       - {name: slug, type: string, required: true}
-      - {name: position, type: string}
-      - {name: affiliation, type: string}
-      - {name: participation, type: string}
-      - {name: email, type: string}
-      - {name: phone, type: string}
-      - {name: phone_secondary, label: Secondary phone / cell, type: string}
-      - {name: office, type: string}
-      - {name: office_hours, type: string}
-      - {name: photo, type: image}
-      - {name: sort_order, type: number}
+      - {name: position, label: Academic title, type: string}
+      - {name: affiliation, label: University, type: string}
+      - {name: participation, label: Role on gold bar, type: string}
+      - {name: photo, label: Portrait, type: image}
+      - {name: sort_order, label: Display order, type: number}
       - {name: status, type: select, options: {values: [draft, published]}}
 
   - name: community_roles

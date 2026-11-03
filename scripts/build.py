@@ -384,39 +384,60 @@ def speaker_card(sp):
 
 
 def render_speakers():
-    c=PAGES['speakers']
-    founders=[s for s in SPEAKERS if s.get('status')=='published' and s.get('slug') in ('sossou-s-adjisse','frehot-hailou')]
-    founders.sort(key=lambda sp:(sp.get('sort_order',99),sp.get('name','')))
-    leaders=''.join(speaker_card(x) for x in founders)
-    others=[s for s in SPEAKERS if s.get('status')=='published' and s.get('slug') not in {sp['slug'] for sp in founders}]
-    others.sort(key=lambda sp:(sp.get('sort_order',99),sp.get('name','')))
-    other_html=('''<section class="section section--sand"><div class="container"><div class="section-heading-row"><h2>Additional speaker<br><em>and contributor profiles.</em></h2><p>Researchers participating in the seminar community, with roles stated individually.</p></div><div class="speaker-grid">'''+''.join(speaker_card(sp) for sp in others)+'</div></div></section>') if others else ''
-    aff_html=[]
-    for a in sorted(AFFILIATES,key=lambda r:(r.get('sort_order',99),r.get('name',''))):
-        if a.get('status')!='published':
-            continue
-        name=e(a.get('name',''))
-        photo=speaker_image(a,'affiliate-avatar')
-        contact=[]
-        if valid_mail(a.get('email','')):
-            contact.append(f'<li><span>Email</span><a href="mailto:{e(a.get("email",""))}">{e(a.get("email",""))}</a></li>')
-        if a.get('phone'):
-            contact.append(f'<li><span>Phone</span><strong>{e(a.get("phone",""))}</strong></li>')
-        if a.get('phone_secondary'):
-            contact.append(f'<li><span>Cell</span><strong>{e(a.get("phone_secondary",""))}</strong></li>')
-        if a.get('office'):
-            contact.append(f'<li><span>Office</span><strong>{e(a.get("office",""))}</strong></li>')
-        if a.get('office_hours'):
-            contact.append(f'<li><span>Office hours</span><strong>{e(a.get("office_hours",""))}</strong></li>')
-        contact_html=(f'<ul class="affiliate-contact">'+''.join(contact)+'</ul>') if contact else ''
-        aff_html.append(f'''<article class="affiliate-card">{photo}<div class="affiliate-card__body"><h3>{name}</h3><p class="affiliate-position">{e(a.get('position',''))}</p><p class="affiliate-affiliation">{e(a.get('affiliation',''))}</p>{contact_html}<span class="affiliate-status">{e(a.get('participation','Seminar participant'))}</span></div></article>''')
-    role_html=''.join(f'''<article class="community-role"><span class="role-index">{i:02d}</span><h3>{e(item.get('title',''))}</h3><p>{e(item.get('description',''))}</p></article>''' for i,item in enumerate(COMMUNITY_ROLES,1))
-    return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
-<section class="section" id="leadership"><div class="container">{section_label('01','COORDINATION TEAM')}<div class="section-heading-row"><h2>Lead coordination<br><em>with shared support.</em></h2><p>The coordination team guides ERS–WVSU and welcomes collaboration across departments, disciplines, and student research activities.</p></div><div class="speaker-grid leader-grid">{leaders}</div><p class="people-note">Current coordination roles are presented here as Lead Coordinator and Co-Coordinator.</p></div></section>
-<section class="section section--sand" id="research-affiliates"><div class="container">{section_label('02','SEMINAR PARTICIPANTS & SUPPORTERS')}<div class="section-heading-row"><h2>Supported by an<br><em>engaged research community.</em></h2><p>We recognize colleagues who have attended ERS–WVSU sessions and supported the initiative since its launch.</p></div><div class="affiliate-grid">{''.join(aff_html)}</div><p class="people-note">These listings acknowledge participation and support; they do not imply an approved joint project, formal institutional appointment, or completed ERS presentation.</p></div></section>
-<section class="section" id="ways-to-contribute"><div class="container">{section_label('03','WAYS TO PARTICIPATE')}<div class="section-heading-row"><h2>Make room for<br><em>every contribution.</em></h2><p>Participation categories describe ways people may contribute as ERS–WVSU grows. We list members only once roles are agreed.</p></div><div class="community-role-grid">{role_html}</div></div></section>
-{other_html}
-<section class="section section--sand"><div class="container invitation-band"><div>{section_label('04','JOIN THE RESEARCH COMMUNITY')}<h2>{e(c['invitation_title'])}</h2><p>{e(c['invitation_text'])}</p></div>{button('Explore a role or collaboration',internal('get-involved/#propose'))}</div></section>'''+contact_strip('Connect with the ERS–WVSU team','For participating, speaker profiles, or research partnerships.', [('partnerships','Research partnerships'),('speakers','Speaker relations')])
+    """Inclusive, single-panel ERS research community, in organizer-defined order.
+
+    Public cards intentionally display only name and one credential, academic
+    title, university, portrait (where verified), and participation label.
+    No phone numbers, office addresses, personal emails, or college names.
+    """
+    c = PAGES['speakers']
+    participants = [p for p in AFFILIATES if p.get('status') == 'published']
+    participants.sort(key=lambda p: (p.get('sort_order', 999), p.get('name', '')))
+    cards = []
+    for person in participants:
+        name = e(person.get('name', ''))
+        position = e(person.get('position', ''))
+        affiliation = e(person.get('affiliation', 'West Virginia State University'))
+        participation = e(person.get('participation', 'Seminar Participant & Supporter'))
+        portrait = speaker_image(person, 'community-member__portrait')
+        cards.append(
+            f'<article class="community-member">'
+            f'<div class="community-member__image">{portrait}</div>'
+            f'<div class="community-member__details">'
+            f'<h3>{name}</h3>'
+            f'<p class="community-member__title">{position}</p>'
+            f'<p class="community-member__institution">{affiliation}</p>'
+            f'</div>'
+            f'<div class="community-member__role">{participation}</div>'
+            f'</article>'
+        )
+    role_html = ''.join(
+        f'<article class="community-role"><span class="role-index">{i:02d}</span>'
+        f'<h3>{e(item.get("title", ""))}</h3>'
+        f'<p>{e(item.get("description", ""))}</p></article>'
+        for i, item in enumerate(COMMUNITY_ROLES, 1)
+    )
+    return f'''{intro_header(c['eyebrow'], c['heading'], c['heading_emphasis'], c['intro'])}
+<section class="section community-roster-section" id="research-community"><div class="container">
+{section_label('01', 'ERS–WVSU RESEARCH & SEMINAR COMMUNITY')}
+<div class="section-heading-row"><h2>One community.<br><em>Many contributions.</em></h2>
+<p>ERS–WVSU welcomes active participation from colleagues in economics, business,
+management, and other disciplines. Coordination and participation roles are
+shown together to recognize the shared work behind our research exchange.</p></div>
+<div class="community-roster-grid">{''.join(cards)}</div>
+</div></section>
+<section class="section community-contributions" id="ways-to-contribute"><div class="container">
+{section_label('02', 'WAYS TO PARTICIPATE')}
+<div class="section-heading-row"><h2>Make room for<br><em>every contribution.</em></h2>
+<p>Faculty, students, and external collaborators can explore the roles below as
+ERS–WVSU grows. Participation is voluntary, with responsibilities agreed together.</p></div>
+<div class="community-role-grid">{role_html}</div>
+</div></section>
+<section class="section section--sand"><div class="container invitation-band"><div>
+{section_label('03', 'JOIN THE RESEARCH COMMUNITY')}
+<h2>{e(c['invitation_title'])}</h2><p>{e(c['invitation_text'])}</p></div>
+{button('Explore a role or collaboration', internal('get-involved/#propose'))}
+</div></section>'''
 
 
 def render_past_speakers():
