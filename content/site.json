@@ -6,7 +6,7 @@
   "meta_description": "ERS–WVSU is an economics-centered seminar and research development community at West Virginia State University, connecting disciplinary expertise with economics, data analysis, causal inference, and applied AI evaluation.",
   "contact_email": "contact@erswvsu.com",
   "proposal_form_url": "",
-  "mailing_list_url": "",
+  "mailing_list_url": "https://c650f365.sibforms.com/v2/serve/MUIFAA1zjMBKMH1d2-LIl9ejD2CeAXh1oiDFETYymJySk7ogK14X0UzVD-onCvpX0OZ3p3C_gDFrLXvWaaQI-kgOBoGS-oCqBOuoZ1SVAq6qJvJUNcdoyAagwy9gyqbDwhxl-h6u3J50nxgA78GBd1_y8LIBfnKT70dx5-o7ZwV2AOJxaPT8XOF9GTNMLa6xTZocBPyjmcMZQbMH6w==",
   "custom_domain": "www.erswvsu.com",
   "university_url": "https://wvstateu.edu/",
   "footer_note": "An economics-centered, faculty-led research seminar and collaborative research development initiative at West Virginia State University.",
@@ -20,5 +20,6 @@
   "email_mentorship": "mentorship@erswvsu.com",
   "email_outreach": "outreach@erswvsu.com",
   "formspree_endpoint": "https://formspree.io/f/xjyypppg",
-  "mailing_list_provider": "Brevo (planned)"
+  "mailing_list_provider": "Brevo",
+  "mailing_list_embed_url": "https://c650f365.sibforms.com/v2/serve/MUIFAA1zjMBKMH1d2-LIl9ejD2CeAXh1oiDFETYymJySk7ogK14X0UzVD-onCvpX0OZ3p3C_gDFrLXvWaaQI-kgOBoGS-oCqBOuoZ1SVAq6qJvJUNcdoyAagwy9gyqbDwhxl-h6u3J50nxgA78GBd1_y8LIBfnKT70dx5-o7ZwV2AOJxaPT8XOF9GTNMLa6xTZocBPyjmcMZQbMH6w=="
 }

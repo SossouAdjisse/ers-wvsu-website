@@ -385,7 +385,7 @@ def speaker_card(sp):
 
 def render_speakers():
     c=PAGES['speakers']
-    founders=[s for s in SPEAKERS if s.get('status')=='published' and s.get('slug') in ('sossou-s-adjisse','frehot-hailou','saman-bandara')]
+    founders=[s for s in SPEAKERS if s.get('status')=='published' and s.get('slug') in ('sossou-s-adjisse','frehot-hailou')]
     founders.sort(key=lambda sp:(sp.get('sort_order',99),sp.get('name','')))
     leaders=''.join(speaker_card(x) for x in founders)
     others=[s for s in SPEAKERS if s.get('status')=='published' and s.get('slug') not in {sp['slug'] for sp in founders}]
@@ -393,15 +393,31 @@ def render_speakers():
     other_html=('''<section class="section section--sand"><div class="container"><div class="section-heading-row"><h2>Additional speaker<br><em>and contributor profiles.</em></h2><p>Researchers participating in the seminar community, with roles stated individually.</p></div><div class="speaker-grid">'''+''.join(speaker_card(sp) for sp in others)+'</div></div></section>') if others else ''
     aff_html=[]
     for a in sorted(AFFILIATES,key=lambda r:(r.get('sort_order',99),r.get('name',''))):
-        if a.get('status')!='published':continue
-        aff_html.append(f'''<article class="affiliate-card"><span class="affiliate-dot" aria-hidden="true"></span><h3>{e(a.get('name',''))}</h3><p class="affiliate-position">{e(a.get('position',''))}</p><p>{e(a.get('affiliation',''))}</p><span class="affiliate-status">{e(a.get('participation','Seminar participant'))}</span></article>''')
+        if a.get('status')!='published':
+            continue
+        name=e(a.get('name',''))
+        photo=speaker_image(a,'affiliate-avatar')
+        contact=[]
+        if valid_mail(a.get('email','')):
+            contact.append(f'<li><span>Email</span><a href="mailto:{e(a.get("email",""))}">{e(a.get("email",""))}</a></li>')
+        if a.get('phone'):
+            contact.append(f'<li><span>Phone</span><strong>{e(a.get("phone",""))}</strong></li>')
+        if a.get('phone_secondary'):
+            contact.append(f'<li><span>Cell</span><strong>{e(a.get("phone_secondary",""))}</strong></li>')
+        if a.get('office'):
+            contact.append(f'<li><span>Office</span><strong>{e(a.get("office",""))}</strong></li>')
+        if a.get('office_hours'):
+            contact.append(f'<li><span>Office hours</span><strong>{e(a.get("office_hours",""))}</strong></li>')
+        contact_html=(f'<ul class="affiliate-contact">'+''.join(contact)+'</ul>') if contact else ''
+        aff_html.append(f'''<article class="affiliate-card">{photo}<div class="affiliate-card__body"><h3>{name}</h3><p class="affiliate-position">{e(a.get('position',''))}</p><p class="affiliate-affiliation">{e(a.get('affiliation',''))}</p>{contact_html}<span class="affiliate-status">{e(a.get('participation','Seminar participant'))}</span></div></article>''')
     role_html=''.join(f'''<article class="community-role"><span class="role-index">{i:02d}</span><h3>{e(item.get('title',''))}</h3><p>{e(item.get('description',''))}</p></article>''' for i,item in enumerate(COMMUNITY_ROLES,1))
     return f'''{intro_header(c['eyebrow'],c['heading'],c['heading_emphasis'],c['intro'])}
-<section class="section" id="leadership"><div class="container">{section_label('01','INITIATING & COORDINATION TEAM')}<div class="section-heading-row"><h2>Three co-initiators.<br><em>Shared direction.</em></h2><p>The team coordinates ERS–WVSU and welcomes other contributors. Titles reflect the current proposed division of coordination responsibilities.</p></div><div class="speaker-grid leader-grid">{leaders}</div><p class="people-note">The roles above identify seminar coordination, not a separate university administrative office. Team titles should be confirmed by those listed before public announcements.</p></div></section>
-<section class="section section--sand" id="research-affiliates"><div class="container">{section_label('02','RESEARCH AFFILIATES & COLLABORATORS')}<div class="section-heading-row"><h2>Supported by an<br><em>engaged research community.</em></h2><p>We recognize colleagues who have attended ERS–WVSU sessions and supported the initiative since its launch.</p></div><div class="affiliate-grid">{''.join(aff_html)}</div><p class="people-note">These listings acknowledge participation and support; they do not imply an approved joint project, formal institutional appointment, or completed ERS presentation.</p></div></section>
+<section class="section" id="leadership"><div class="container">{section_label('01','COORDINATION TEAM')}<div class="section-heading-row"><h2>Lead coordination<br><em>with shared support.</em></h2><p>The coordination team guides ERS–WVSU and welcomes collaboration across departments, disciplines, and student research activities.</p></div><div class="speaker-grid leader-grid">{leaders}</div><p class="people-note">Current coordination roles are presented here as Lead Coordinator and Co-Coordinator.</p></div></section>
+<section class="section section--sand" id="research-affiliates"><div class="container">{section_label('02','SEMINAR PARTICIPANTS & SUPPORTERS')}<div class="section-heading-row"><h2>Supported by an<br><em>engaged research community.</em></h2><p>We recognize colleagues who have attended ERS–WVSU sessions and supported the initiative since its launch.</p></div><div class="affiliate-grid">{''.join(aff_html)}</div><p class="people-note">These listings acknowledge participation and support; they do not imply an approved joint project, formal institutional appointment, or completed ERS presentation.</p></div></section>
 <section class="section" id="ways-to-contribute"><div class="container">{section_label('03','WAYS TO PARTICIPATE')}<div class="section-heading-row"><h2>Make room for<br><em>every contribution.</em></h2><p>Participation categories describe ways people may contribute as ERS–WVSU grows. We list members only once roles are agreed.</p></div><div class="community-role-grid">{role_html}</div></div></section>
 {other_html}
 <section class="section section--sand"><div class="container invitation-band"><div>{section_label('04','JOIN THE RESEARCH COMMUNITY')}<h2>{e(c['invitation_title'])}</h2><p>{e(c['invitation_text'])}</p></div>{button('Explore a role or collaboration',internal('get-involved/#propose'))}</div></section>'''+contact_strip('Connect with the ERS–WVSU team','For participating, speaker profiles, or research partnerships.', [('partnerships','Research partnerships'),('speakers','Speaker relations')])
+
 
 def render_past_speakers():
     c=PAGES['past-speakers']
@@ -463,14 +479,36 @@ def render_archive():
 
 
 def render_newsletter_feature(compact=False):
+    # Brevo-managed signup with hosted fallback.
+    embed_url=remote_url(SITE.get('mailing_list_embed_url',''))
+    parsed=urlparse(embed_url) if embed_url else None
+    valid_embed=bool(parsed and parsed.scheme=='https' and parsed.hostname=='c650f365.sibforms.com' and parsed.path.startswith('/v2/serve/'))
     link=remote_url(SITE.get('mailing_list_url',''))
-    if link:
+    extra_class=''
+    if valid_embed:
+        extra_class=' newsletter-feature__action--embed'
+        act=(f'<div class="newsletter-embed">'
+             f'<iframe class="newsletter-iframe" title="Join the ERS–WVSU Research Community mailing list" '
+             f'src="{e(embed_url)}" loading="lazy" scrolling="auto" referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+             f'<p class="newsletter-open-link">Having trouble viewing the form? '
+             f'<a href="{e(embed_url)}" target="_blank" rel="noopener noreferrer">Open the signup form in a new tab</a>.</p>'
+             f'</div>')
+        desc=('Receive ERS–WVSU seminar announcements, research opportunities, '
+              'collaboration updates, and student mentorship news. '
+              'Signups are handled by Brevo; confirm your subscription by email. You may unsubscribe at any time.')
+    elif link:
         act=button('Subscribe to ERS updates',link,'gold','up-right')
         desc='Subscribe to receive seminar announcements and research-community updates. You can unsubscribe at any time.'
     else:
         act='<span class="newsletter-pending">Subscription form is being prepared with Brevo.</span>'
         desc='A voluntary mailing list for future seminars and research opportunities is coming soon. No signup data is collected on this website yet.'
-    return f'''<section class="section newsletter-feature" id="mailing-list"><div class="container newsletter-feature__grid"><div>{section_label('07','THE ERS–WVSU MAILING LIST')}<h2>Stay in the<br><em>research conversation.</em></h2><p>{e(desc)}</p></div><div class="newsletter-feature__action">{act}<p>Interested in a seminar now? {channel_link('seminars','Write to the seminar team')}.</p></div></div></section>'''
+    return (f'<section class="section newsletter-feature" id="mailing-list">'
+            f'<div class="container newsletter-feature__grid">'
+            f'<div>{section_label("07","THE ERS–WVSU MAILING LIST")}<h2>Stay in the<br><em>research conversation.</em></h2><p>{e(desc)}</p></div>'
+            f'<div class="newsletter-feature__action{extra_class}">{act}'
+            f'<p>Interested in a seminar now? {channel_link("seminars","Write to the seminar team")}.</p>'
+            f'</div></div></section>')
+
 
 def render_involved():
     c=PAGES['get-involved']

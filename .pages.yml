@@ -32,6 +32,7 @@ content:
       - {name: proposal_form_url, label: Legacy external proposal form (not currently used), type: string, description: Reserved for any future external option}
       - {name: mailing_list_url, label: Brevo mailing list signup URL, type: string, description: Leave blank until the form is created, verified and ready for public launch}
       - {name: mailing_list_provider, label: Mailing list provider label, type: string}
+      - {name: mailing_list_embed_url, label: Brevo embedded form URL, type: string, description: Use the full HTTPS iframe src from Brevo if you want the newsletter form embedded directly on the site}
       - {name: custom_domain, label: Custom domain, type: string, description: Only set after configuring GitHub Pages and Porkbun; example www.erswvsu.org}
       - {name: university_url, label: WVSU website URL, type: string}
       - {name: footer_note, label: Footer note, type: text}
@@ -259,6 +260,12 @@ content:
       - {name: position, type: string}
       - {name: affiliation, type: string}
       - {name: participation, type: string}
+      - {name: email, type: string}
+      - {name: phone, type: string}
+      - {name: phone_secondary, label: Secondary phone / cell, type: string}
+      - {name: office, type: string}
+      - {name: office_hours, type: string}
+      - {name: photo, type: image}
       - {name: sort_order, type: number}
       - {name: status, type: select, options: {values: [draft, published]}}
 
