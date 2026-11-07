@@ -5,7 +5,7 @@
   "position": "Associate Professor; Director of International Business Concentration, Department of Management",
   "affiliation": "West Virginia State University",
   "expertise": "International business; management; mergers and acquisitions; corporate governance",
-  "bio": "Dr. Michael N. Young is an Associate Professor at West Virginia State University and Director of the International Business Concentration in the Department of Management. His research examines international business, mergers and acquisitions, and related questions in corporate strategy and governance.",
+  "bio": "Dr. Michael N. Young is an Associate Professor at West Virginia State University and Director of the International Business Concentration. His scholarship in international business, mergers and acquisitions, and corporate strategy includes a 2016 commentary in Management and Organization Review examining whether stock-market reactions to Chinese merger announcements accurately reflect likely outcomes. His November ERS–WVSU seminar uses that publication to open an interdisciplinary conversation about research methods and the interpretation of evidence.",
   "website_url": "https://scholar.google.com/citations?user=i89T8FgAAAAJ&hl=en",
   "photo": "",
   "status": "published",
@@ -13,5 +13,7 @@
   "past_speaker": false,
   "past_talk": "",
   "past_talk_note": "",
-  "past_talk_summary": ""
+  "past_talk_summary": "",
+  "featured_publication_title": "Commentary on the Enigma of Chinese Performance (Management and Organization Review, 2016)",
+  "featured_publication_url": "https://doi.org/10.1017/mor.2016.11"
 }

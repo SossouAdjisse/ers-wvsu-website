@@ -141,8 +141,6 @@ def head_html(title, description, current):
 <title>{e(title)} | ERS–WVSU</title><meta name="description" content="{e(description)}">
 <meta property="og:type" content="website"><meta property="og:title" content="{e(title)} — ERS–WVSU"><meta property="og:description" content="{e(description)}">
 <link rel="icon" href="{e(favicon)}" type="image/svg+xml">{canonical}
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{e(css)}"><link rel="stylesheet" href="{e(appearance_css)}"><script src="{e(js)}" defer></script>
 </head><body><a class="skip-link" href="#main">Skip to main content</a>'''
 
@@ -400,6 +398,8 @@ def render_speakers():
         affiliation = e(person.get('affiliation', 'West Virginia State University'))
         participation = e(person.get('participation', 'Seminar Participant & Supporter'))
         portrait = speaker_image(person, 'community-member__portrait')
+        show_profile = person.get('slug') in {s.get('slug') for s in SPEAKERS if s.get('status') == 'published'}
+        profile_link=(f'<a class="community-member__profile-link" href="{e(internal("speakers/"+person["slug"]+"/"))}">View profile and publications {icon("up-right",14)}</a>') if show_profile else ''
         cards.append(
             f'<article class="community-member">'
             f'<div class="community-member__image">{portrait}</div>'
@@ -407,6 +407,7 @@ def render_speakers():
             f'<h3>{name}</h3>'
             f'<p class="community-member__title">{position}</p>'
             f'<p class="community-member__institution">{affiliation}</p>'
+            f'{profile_link}'
             f'</div>'
             f'<div class="community-member__role">{participation}</div>'
             f'</article>'
@@ -573,15 +574,20 @@ def render_about():
 def render_speaker_detail(sp):
     name=sp.get('name','Speaker')
     site_url=remote_url(sp.get('website_url',''))
-    website=(f'<a class="inline-link" href="{e(site_url)}" target="_blank" rel="noopener noreferrer">Visit professional website {icon("up-right",16)}</a>' if site_url else '')
+    website=(f'<a class="inline-link" href="{e(site_url)}" target="_blank" rel="noopener noreferrer">{e("View Google Scholar profile" if "scholar.google.com" in site_url else "Visit professional website")} {icon("up-right",16)}</a>' if site_url else '')
     tags=''.join(f'<span class="expertise-tag">{e(t.strip())}</span>' for t in sp.get('expertise','').split(';') if t.strip())
+    pub_url=remote_url(sp.get('featured_publication_url',''))
+    pub_title=str(sp.get('featured_publication_title','')).strip()
+    pub_markup=(f'<aside class="speaker-publication-box"><h3>Selected publication</h3><p><a href="{e(pub_url)}" target="_blank" rel="noopener noreferrer">{e(pub_title or "Read published research")} {icon("up-right",16)}</a></p></aside>') if pub_url else ''
+    matching_events=sorted((ev for ev in EVENTS if ev.get('speaker_slug')==sp.get('slug') and future_ev(ev)),key=lambda ev:ev.get('date',''))
+    event_markup=(' <p class="speaker-upcoming-link"><a class="inline-link" href="'+e(internal('seminars/'+matching_events[0]['slug']+'/'))+'">Upcoming ERS–WVSU presentation '+icon('up-right',16)+'</a></p>') if matching_events else ''
     talk=''
     if sp.get('past_speaker') and sp.get('past_talk'):
         date=pretty_date(sp['past_talk_date']) if sp.get('past_talk_date') else 'Date forthcoming'
         time=sp.get('past_talk_time','')
         summary=sp.get('past_talk_summary','') or sp.get('past_talk_note','')
         talk=f'''<section class="section section--sand"><div class="container talk-profile"><div>{section_label('02','PAST ERS–WVSU PRESENTATION')}<h2>{e(sp['past_talk'])}</h2><p class="talk-date">{e(date)} {('· '+e(time)) if time else ''}</p></div><p class="lead-paragraph">{e(summary)}</p></div></section>'''
-    return f'''<section class="detail-hero"><div class="container"><a class="detail-back" href="{e(internal('speakers/'))}">← All people</a><div class="speaker-detail-grid"><div class="speaker-detail-photo">{speaker_image(sp,'detail-avatar')}</div><div>{eyebrow(sp.get('role','RESEARCH COMMUNITY'),True)}<h1>{e(name)}</h1><p class="detail-subtitle">{e(sp.get('position',''))}<br>{e(sp.get('affiliation',''))}</p></div></div></div></section><section class="section"><div class="container detail-content"><div>{section_label('01','RESEARCH PROFILE')}<h2>About the<br><em>researcher.</em></h2></div><div><p class="lead-paragraph">{e(sp.get('bio','Biography forthcoming.'))}</p><div class="expertise-tags">{tags}</div>{website}</div></div></section>{talk}'''
+    return f'''<section class="detail-hero"><div class="container"><a class="detail-back" href="{e(internal('speakers/'))}">← All people</a><div class="speaker-detail-grid"><div class="speaker-detail-photo">{speaker_image(sp,'detail-avatar')}</div><div>{eyebrow(sp.get('role','RESEARCH COMMUNITY'),True)}<h1>{e(name)}</h1><p class="detail-subtitle">{e(sp.get('position',''))}<br>{e(sp.get('affiliation',''))}</p></div></div></div></section><section class="section"><div class="container detail-content"><div>{section_label('01','RESEARCH PROFILE')}<h2>About the<br><em>researcher.</em></h2></div><div><p class="lead-paragraph">{e(sp.get('bio','Biography forthcoming.'))}</p><div class="expertise-tags">{tags}</div>{website}{pub_markup}{event_markup}</div></div></section>{talk}'''
 
 def render_event_detail(ev):
     title=ev.get('title','Seminar')
@@ -597,9 +603,23 @@ def render_event_detail(ev):
     mat=remote_url(ev.get('materials_url',''))
     if reg and future_ev(ev): links.append(button('Registration details',reg,'outline-dark'))
     if mat: links.append(button('View shared materials',mat,'outline-dark'))
+    # External publisher pages: do not republish attachment PDFs without permission.
+    paper_links=[]
+    for key, label in (
+        ('paper_commentary_url', 'Read Michael N. Young’s published commentary (2016)'),
+        ('paper_original_url', 'Read the original study by McCarthy and colleagues (2016)'),
+    ):
+        url=remote_url(ev.get(key,''))
+        if url:
+            paper_links.append(f'<li><a href="{e(url)}" target="_blank" rel="noopener noreferrer">{e(label)} {icon("up-right",16)}</a></li>')
+    paper_markup=('<aside class="seminar-reading"><h3>Background reading</h3><p>The two linked articles are optional reading for an interdisciplinary discussion.</p><ul>'+''.join(paper_links)+'</ul></aside>') if paper_links else ''
+    audience=ev.get('audience_note','').strip()
+    audience_markup=f'<p class="seminar-context"><strong>Who should attend:</strong> {e(audience)}</p>' if audience else ''
+    hospitality=ev.get('refreshments_note','').strip()
+    hospitality_markup=f'<p class="seminar-context"><strong>At the seminar:</strong> {e(hospitality)}</p>' if hospitality else ''
     action=''.join(links)
     return f'''<section class="detail-hero detail-hero--event"><div class="container"><a class="detail-back" href="{e(internal('seminars/'))}">← All seminars</a>{eyebrow(ev.get('event_type','Research seminar'),True)}<h1>{e(title)}</h1><p class="detail-subtitle">{e(ev.get('topic','Research exchange'))}</p></div></section>
-<section class="section"><div class="container event-detail-grid"><div class="event-detail-body">{section_label('01','ABOUT THIS SESSION')}<h2>Research in<br><em>conversation.</em></h2><p class="lead-paragraph">{e(ev.get('abstract','Details will be added soon.'))}</p><div class="event-detail-actions">{action}</div></div>
+<section class="section"><div class="container event-detail-grid"><div class="event-detail-body">{section_label('01','ABOUT THIS SESSION')}<h2>Research in<br><em>conversation.</em></h2><p class="lead-paragraph">{e(ev.get('abstract','Details will be added soon.'))}</p>{audience_markup}{hospitality_markup}{paper_markup}<div class="event-detail-actions">{action}</div></div>
 <aside class="event-facts"><span class="mini-label">SESSION INFORMATION</span><div><span>{icon('calendar',20)} DATE</span><strong>{e(day)}</strong></div><div><span>{icon('clock',20)} TIME</span><strong>{e(time)}</strong></div><div><span>{icon('pin',20)} LOCATION</span><strong>{e(ev.get('location','To be announced'))}</strong></div><div><span>{icon('speaker',20)} PRESENTER</span><strong>{speaker_label}</strong><small>{e(ev.get('speaker_affiliation',''))}</small></div></aside></div></section>'''
 
 

@@ -1,6 +1,6 @@
 /* ERS–WVSU | original editorial academic website | no CSS framework */
 :root {
-  --ink: #191d19; --dark: #161a16; --darkest: #101410; --gold: #cfab2b; --gold-soft: #e2c65c;
+  --ink: #191d19; --dark: #161a16; --darkest: #101410; --gold: #d9b500; --gold-soft: #e2c65c;
   --cream: #fcfbf7; --sand: #f1eee4; --sand-deep: #e9e4d5; --line: #dfdccf;
   --muted: #62675f; --white: #fff; --max: 1192px;
   --sans: 'Open Sans', Arial, Helvetica, sans-serif;
@@ -25,7 +25,7 @@ img { display: block; }
 .site-announcement { color:#e9e5cc; background:#0d110e; font: 600 9px/1.4 var(--ui); letter-spacing:.18em; text-transform:uppercase; }
 .announcement-inner { height:29px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .announcement-inner > span { display:flex; align-items:center; gap:9px; }
-.status-spark { width:5px; height:5px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px #cfab2b25; }
+.status-spark { width:5px; height:5px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px #d9b50025; }
 .announcement-right { opacity:.68; }
 .announcement-right .bullet { color:var(--gold); font-size:13px; }
 .site-header { background:rgba(252,251,247,.97); position:sticky; top:0; z-index:100; border-bottom:1px solid #e9e5d9; backdrop-filter:blur(14px); }
@@ -446,7 +446,7 @@ p { margin-bottom:18px; }
   --cream: var(--background-color, #fcfbf7);
   --sand: var(--secondary-background-color, #f3f0e7);
   --dark: var(--dark-background-color, #151a17);
-  --gold: var(--accent-color, #cfab2b);
+  --gold: var(--accent-color, #d9b500);
   --muted-strong: #485149;
   --type-body: var(--body-font-px, 18px);
   --type-nav: var(--navigation-font-px, 15px);
@@ -881,7 +881,7 @@ body { font-size:var(--type-body); }
 
 /* Direct online inquiry */
 .research-inquiry .consent-check { display:flex; align-items:flex-start; gap:12px; font-size:14px; line-height:1.6; }
-.research-inquiry .consent-check input { flex:0 0 auto; width:20px; min-width:20px; height:20px; margin:3px 0 0; accent-color:#CFAB2B; }
+.research-inquiry .consent-check input { flex:0 0 auto; width:20px; min-width:20px; height:20px; margin:3px 0 0; accent-color:#D9B500; }
 .research-inquiry .consent-check span { color:#e6ecdf; font-weight:400; }
 .hp-wrap { position:absolute!important; width:1px!important; height:1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; }
 .research-inquiry .btn:disabled { opacity:.65; cursor:progress; }
@@ -891,7 +891,7 @@ body { font-size:var(--type-body); }
 .form-status[data-state="pending"] { color:#eae2bb; }
 
 /* Mailing list: intentionally not yet active until Brevo is configured */
-.newsletter-feature { background:#eee7d3; border-top:4px solid #cfab2b; }
+.newsletter-feature { background:#eee7d3; border-top:4px solid #d9b500; }
 .newsletter-feature__grid { display:grid; grid-template-columns:1.2fr .8fr; gap:80px; align-items:center; }
 .newsletter-feature h2 { margin-bottom:20px; }
 .newsletter-feature h2 em { color:#956f17; }
@@ -916,7 +916,7 @@ body { font-size:var(--type-body); }
  .menu-toggle { display:block; margin-left:auto; flex-shrink:0; }
  .site-nav-row { position:absolute; top:100%; left:0; right:0; border:0; box-shadow:none; background:transparent; }
  .site-nav-inner { min-height:0; padding-inline:0; }
- .site-nav-row .primary-nav { display:none; flex-direction:column; align-items:stretch; justify-content:flex-start; width:100%; background:var(--cream); padding:12px 24px 21px; box-shadow:0 18px 24px #0002; border-bottom:2px solid #cfab2b; gap:0; }
+ .site-nav-row .primary-nav { display:none; flex-direction:column; align-items:stretch; justify-content:flex-start; width:100%; background:var(--cream); padding:12px 24px 21px; box-shadow:0 18px 24px #0002; border-bottom:2px solid #d9b500; gap:0; }
  .site-nav-row .primary-nav.is-open { display:flex; }
  .site-nav-row .nav-link { font-size:17px; padding:12px 8px; border-bottom:1px solid #e8dfcb; }
  .affiliate-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -1054,7 +1054,7 @@ body { font-size:var(--type-body); }
 .community-member__institution { color:#606961; font:500 15px/1.5 var(--sans); margin:0; }
 .community-member__role {
   display:block;
-  background:#B78D21;
+  background:#D9B500;
   color:#141711;
   width:100%;
   margin-top:auto;
@@ -1064,7 +1064,7 @@ body { font-size:var(--type-body); }
   letter-spacing:.005em;
   text-align:center;
   align-content:center;
-  border-top:1px solid #987318;
+  border-top:1px solid #A98D00;
 }
 @media(max-width:1150px) {
   .community-roster-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); }
@@ -1077,4 +1077,117 @@ body { font-size:var(--type-body); }
   .community-member__image { aspect-ratio:4 / 3.1; }
   .community-member__details { padding:22px; }
   .community-member h3 { font-size:23px; }
+}
+
+/* ERS–WVSU / November 2026: Times New Roman, richer yellow, legible header */
+:root {
+  --sans: "Times New Roman", Times, serif;
+  --serif: "Times New Roman", Times, serif;
+  --ui: "Times New Roman", Times, serif;
+  --gold: #D9B500;
+  --gold-soft: #F0D03C;
+  --type-nav: 21px;
+}
+html, body, body *, body *::before, body *::after {
+  font-family: "Times New Roman", Times, serif !important;
+}
+/* Consistent deep yellow instead of the older muted/brown-gold band. */
+.brand-period, .announcement-right .bullet, .eyebrow--light,
+.page-hero h1 em, .home-hero h1 em, .footer-intro h2 em {
+  color: #E4C20E;
+}
+.community-member__role {
+  background: #D9B500;
+  border-top-color: #A98D00;
+  color: #161914;
+  font-size: 17px;
+  font-weight: 700;
+}
+.btn--gold, .hero-art__symbol, .speaker-card__corner,
+.status-spark, .live-dot, .eyebrow-dot { background-color:#D9B500; }
+.btn--gold:hover { background-color:#F0D03C; border-color:#F0D03C; }
+.site-nav-row .nav-link.is-active::after { background-color:#D9B500; }
+.research-inquiry .consent-check input { accent-color:#D9B500; }
+.newsletter-feature { border-top-color:#D9B500; }
+/* Preserve contrast for tiny lettering on white and ivory backgrounds. */
+.eyebrow:not(.eyebrow--light), .section-label, .mini-label, .overline,
+.section-label span { color:#756100; }
+.home-hero .eyebrow, .page-hero--dark .eyebrow,
+.detail-hero .eyebrow, .region-section .section-label,
+.partner-cta .section-label { color:#1B241C; }
+
+html { scroll-padding-top:270px; }
+/* Taller, more readable two-tier identity and navigation. */
+.site-announcement { font-size:15px; letter-spacing:.055em; }
+.announcement-inner { height:auto; min-height:49px; }
+.announcement-right { opacity:.95; }
+.status-spark { width:9px; height:9px; }
+.header-brand-row { min-height:130px; gap:32px; }
+.header-brand-row .brand { gap:20px; }
+.header-brand-row .brand-mark { font-size:44px; letter-spacing:-.02em; }
+.header-brand-row .brand-rule { height:64px; }
+.header-brand-row .brand-name { font-size:31px; line-height:1.12; letter-spacing:0; }
+.header-brand-row .brand-name span { font-size:22px; line-height:1.2; margin-top:8px; }
+.header-purpose { font-size:16px; letter-spacing:.035em; font-weight:700; line-height:1.3; }
+.site-nav-inner { min-height:74px; }
+.site-nav-row .primary-nav { gap:12px; }
+.site-nav-row .nav-link { font-size:21px; letter-spacing:0; padding:21px 6px; line-height:1.1; }
+.nav-link.is-active::after { bottom:10px; }
+/* Improve the Times headline rhythm instead of relying on sans-serif tracking. */
+h1,h2,h3,h4, .community-member h3, .speaker-card h3 { letter-spacing:-.012em; }
+.eyebrow,.section-label,.mini-label,.overline { letter-spacing:.055em; }
+.brand-name, .brand-name span { letter-spacing:0; }
+.community-member__title { font-size:18px; }
+.community-member__institution { font-size:17px; }
+.community-member h3 { font-size:clamp(21px,1.7vw,26px); }
+.community-member__profile-link {
+  display:inline-flex; align-items:center; align-self:flex-start;
+  margin-top:2px; color:#5A4B00; text-decoration:underline;
+  text-decoration-thickness:1px; text-underline-offset:3px;
+  font-size:16px; font-weight:700;
+}
+.community-member__profile-link:hover { color:#20251c; }
+/* Article notes and links on the seminar and speaker profile. */
+.seminar-reading, .speaker-publication-box {
+  margin:30px 0 26px; padding:27px 30px;
+  background:#FFF8DC; border-left:7px solid #D9B500;
+  color:#20291F;
+}
+.seminar-reading h3, .speaker-publication-box h3 { margin-bottom:12px; font-size:25px; }
+.seminar-reading p, .speaker-publication-box p { font-size:18px; line-height:1.6; }
+.seminar-reading ul, .speaker-publication-box ul { margin:0; padding-left:26px; }
+.seminar-reading li, .speaker-publication-box li { margin:7px 0; font-size:18px; line-height:1.55; }
+.seminar-reading a, .speaker-publication-box a { color:#4F4100; text-decoration:underline; text-underline-offset:3px; }
+.seminar-context { margin:22px 0 10px; font-size:19px; line-height:1.6; }
+.seminar-context strong { color:#5D4C00; }
+/* Keep existing contrast rectangles; remove any inherited narrow gold ribbons. */
+.home-hero::before,.page-hero--dark::before,.region-section::before,
+.partner-cta::before,.detail-hero::before,.footer::before { content:none !important; }
+
+@media(max-width:1240px) {
+  .header-purpose { display:none; }
+  .header-brand-row .brand-name { font-size:28px; }
+  .site-nav-row .nav-link { font-size:20px; }
+}
+@media(max-width:1050px) {
+  html { scroll-padding-top:115px; }
+  .site-nav-inner { min-height:0; }
+  .header-brand-row { min-height:105px; }
+  .header-brand-row .brand-mark { font-size:35px; }
+  .header-brand-row .brand-rule { height:52px; }
+  .header-brand-row .brand-name { font-size:26px; }
+  .header-brand-row .brand-name span { font-size:19px; }
+  .site-nav-row .nav-link { font-size:21px; padding:13px 8px; }
+}
+@media(max-width:640px) {
+  html { scroll-padding-top:100px; }
+  .site-announcement { font-size:12px; }
+  .announcement-inner { min-height:37px; text-align:center; }
+  .header-brand-row { min-height:91px; }
+  .header-brand-row .brand { gap:10px; }
+  .header-brand-row .brand-mark { font-size:30px; }
+  .header-brand-row .brand-rule { height:48px; }
+  .header-brand-row .brand-name { font-size:clamp(19px,5.2vw,26px); }
+  .header-brand-row .brand-name span { font-size:clamp(15px,3.7vw,18px); margin-top:4px; }
+  .seminar-reading,.speaker-publication-box { padding:20px 19px; }
 }

@@ -302,6 +302,10 @@ content:
       - {name: abstract, type: text}
       - {name: registration_url, type: string, description: Optional full HTTPS link}
       - {name: materials_url, type: string, description: Optional full HTTPS link}
+      - {name: paper_commentary_url, label: Related presenter commentary, type: string}
+      - {name: paper_original_url, label: Related original study, type: string}
+      - {name: audience_note, label: Audience and discussion notes, type: text}
+      - {name: refreshments_note, label: Reception or refreshments note, type: string}
       - {name: cover_image, type: image}
       - {name: status, type: select, required: true, options: {values: [draft, scheduled, completed]}}
       - {name: featured, type: boolean}
@@ -325,6 +329,8 @@ content:
       - {name: expertise, type: text}
       - {name: bio, type: text}
       - {name: website_url, type: string}
+      - {name: featured_publication_title, label: Featured research title, type: string}
+      - {name: featured_publication_url, label: Featured research URL, type: string}
       - {name: photo, type: image}
       - {name: status, type: select, required: true, options: {values: [draft, published]}}
       - {name: sort_order, type: number}
