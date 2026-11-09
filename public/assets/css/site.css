@@ -1232,3 +1232,10 @@ h1,h2,h3,h4, .community-member h3, .speaker-card h3 { letter-spacing:-.012em; }
   background: #111 !important;
   opacity: 0.65;
 }
+
+/* Put Get Involved hero emphasis on its own line */
+body:has(.nav-link.is-active[href="/get-involved/"]) .page-hero h1 em {
+  display: block;
+  margin-top: 0.08em;
+}
+
