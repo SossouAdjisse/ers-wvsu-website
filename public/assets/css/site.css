@@ -1191,3 +1191,44 @@ h1,h2,h3,h4, .community-member h3, .speaker-card h3 { letter-spacing:-.012em; }
   .header-brand-row .brand-name span { font-size:clamp(15px,3.7vw,18px); margin-top:4px; }
   .seminar-reading,.speaker-publication-box { padding:20px 19px; }
 }
+
+/* Full-width vibrant yellow ERS identity band */
+.site-header {
+  background: #F2C500;
+}
+
+.header-brand-row .brand-name,
+.header-brand-row .brand-name span,
+.header-brand-row .brand-mark,
+.header-purpose {
+  color: #111;
+}
+
+/* Keep the navigation band underneath light */
+.site-nav-row {
+  background: #F5F1E7;
+}
+
+
+/* Refine punctuation and divider on yellow identity band */
+.header-brand-row .brand-period,
+.header-brand-row .header-purpose span {
+  color: #111 !important;
+}
+
+.header-brand-row .brand-rule {
+  background: #111 !important;
+  opacity: 0.65;
+}
+
+
+/* Final yellow-header refinement */
+.header-brand-row .brand-period,
+.header-brand-row .header-purpose span {
+  color: #111 !important;
+}
+
+.header-brand-row .brand-rule {
+  background: #111 !important;
+  opacity: 0.65;
+}
