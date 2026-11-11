@@ -255,9 +255,10 @@ content:
     format: json
     list: true
     fields:
-      - {name: name, label: Name with one credential, type: string, required: true}
+      - {name: participant_type, label: Participant group, type: select, options: {values: [faculty, student]}}
+      - {name: name, label: Name and credentials, type: string, required: true}
       - {name: slug, type: string, required: true}
-      - {name: position, label: Academic title, type: string}
+      - {name: position, label: Full academic title or student status, type: string}
       - {name: affiliation, label: University, type: string}
       - {name: participation, label: Role on gold bar, type: string}
       - {name: photo, label: Portrait, type: image}

@@ -2,71 +2,111 @@
   {
     "slug": "sossou-s-adjisse",
     "name": "Sossou S. Adjisse, Ph.D.",
-    "position": "Assistant Professor",
+    "position": "Assistant Professor of Economics",
     "affiliation": "West Virginia State University",
     "participation": "Lead Coordinator",
     "photo": "",
     "sort_order": 1,
-    "status": "published"
+    "status": "published",
+    "participant_type": "faculty"
   },
   {
     "slug": "frehot-hailou",
     "name": "Frehot Hailou, Ph.D.",
-    "position": "Professor & Chair",
+    "position": "Professor of Economics & Chair, Department of Economics and Agribusiness",
     "affiliation": "West Virginia State University",
     "participation": "Co-Coordinator",
     "photo": "",
     "sort_order": 2,
-    "status": "published"
-  },
-  {
-    "slug": "saman-bandara",
-    "name": "Saman Bandara, Ph.D.",
-    "position": "Associate Professor",
-    "affiliation": "West Virginia State University",
-    "participation": "Seminar Participant & Supporter",
-    "photo": "",
-    "sort_order": 3,
-    "status": "published"
+    "status": "published",
+    "participant_type": "faculty"
   },
   {
     "slug": "michael-young",
     "name": "Michael Young, Ph.D.",
-    "position": "Associate Professor",
+    "position": "Associate Professor of Management",
     "affiliation": "West Virginia State University",
-    "participation": "Seminar Participant & Supporter",
+    "participation": "Faculty Participant & Supporter",
     "photo": "",
-    "sort_order": 4,
-    "status": "published"
+    "sort_order": 3,
+    "status": "published",
+    "participant_type": "faculty"
   },
   {
     "slug": "clinton-arnold",
     "name": "Clint Arnold, DBA",
-    "position": "Assistant Professor & Chair",
+    "position": "Assistant Professor of Business Administration & Department Chair",
     "affiliation": "West Virginia State University",
-    "participation": "Seminar Participant & Supporter",
+    "participation": "Faculty Participant & Supporter",
     "photo": "media/people/clinton-arnold.png",
-    "sort_order": 5,
-    "status": "published"
+    "sort_order": 4,
+    "status": "published",
+    "participant_type": "faculty"
   },
   {
     "slug": "austin-oconnor",
     "name": "Austin O'Connor, M.S.",
-    "position": "Assistant Professor",
+    "position": "Assistant Professor of Business",
     "affiliation": "West Virginia State University",
-    "participation": "Seminar Participant & Supporter",
+    "participation": "Faculty Participant & Supporter",
     "photo": "media/people/austin-oconnor.png",
-    "sort_order": 6,
-    "status": "published"
+    "sort_order": 5,
+    "status": "published",
+    "participant_type": "faculty"
   },
   {
     "slug": "jonathan-austin",
-    "name": "Jonathan D. Austin, CPA",
-    "position": "Assistant Professor",
+    "name": "Jonathan D. Austin, CPA, MBA",
+    "position": "Assistant Professor of Business Administration",
     "affiliation": "West Virginia State University",
-    "participation": "Seminar Participant & Supporter",
+    "participation": "Faculty Participant & Supporter",
+    "photo": "",
+    "sort_order": 6,
+    "status": "published",
+    "participant_type": "faculty"
+  },
+  {
+    "slug": "saman-bandara",
+    "name": "Saman Bandara, Ph.D.",
+    "position": "Associate Professor of Economics",
+    "affiliation": "West Virginia State University",
+    "participation": "Faculty Participant & Supporter",
     "photo": "",
     "sort_order": 7,
-    "status": "published"
+    "status": "published",
+    "participant_type": "faculty"
+  },
+  {
+    "slug": "jonah-thompson",
+    "name": "Jonah Thompson",
+    "position": "Student",
+    "affiliation": "West Virginia State University",
+    "participation": "Student Participant & Supporter",
+    "participant_type": "student",
+    "photo": "",
+    "status": "published",
+    "sort_order": 8
+  },
+  {
+    "slug": "brayden-hundley",
+    "name": "Brayden Hundley",
+    "position": "Student",
+    "affiliation": "West Virginia State University",
+    "participation": "Student Participant & Supporter",
+    "participant_type": "student",
+    "photo": "",
+    "status": "published",
+    "sort_order": 9
+  },
+  {
+    "slug": "daimer-rahatt",
+    "name": "Daimer Rahatt",
+    "position": "Student",
+    "affiliation": "West Virginia State University",
+    "participation": "Student Participant & Supporter",
+    "participant_type": "student",
+    "photo": "",
+    "status": "published",
+    "sort_order": 10
   }
 ]

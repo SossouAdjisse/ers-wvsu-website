@@ -382,35 +382,60 @@ def speaker_card(sp):
 
 
 def render_speakers():
-    """Inclusive, single-panel ERS research community, in organizer-defined order.
-
-    Public cards intentionally display only name and one credential, academic
-    title, university, portrait (where verified), and participation label.
-    No phone numbers, office addresses, personal emails, or college names.
-    """
+    """One ERS community: faculty first, followed by student participants."""
     c = PAGES['speakers']
     participants = [p for p in AFFILIATES if p.get('status') == 'published']
     participants.sort(key=lambda p: (p.get('sort_order', 999), p.get('name', '')))
-    cards = []
-    for person in participants:
+    def is_student(person):
+        return (person.get('participant_type') == 'student' or
+                str(person.get('participation', '')).startswith('Student Participant'))
+    faculty = [p for p in participants if not is_student(p)]
+    students = [p for p in participants if is_student(p)]
+    published_profiles = {s.get('slug') for s in SPEAKERS if s.get('status') == 'published'}
+
+    def member_card(person):
         name = e(person.get('name', ''))
         position = e(person.get('position', ''))
         affiliation = e(person.get('affiliation', 'West Virginia State University'))
-        participation = e(person.get('participation', 'Seminar Participant & Supporter'))
-        portrait = speaker_image(person, 'community-member__portrait')
-        show_profile = person.get('slug') in {s.get('slug') for s in SPEAKERS if s.get('status') == 'published'}
-        profile_link=(f'<a class="community-member__profile-link" href="{e(internal("speakers/"+person["slug"]+"/"))}">View profile and publications {icon("up-right",14)}</a>') if show_profile else ''
-        cards.append(
-            f'<article class="community-member">'
+        kind = 'student' if is_student(person) else 'faculty'
+        default_role = 'Student Participant & Supporter' if kind == 'student' else 'Faculty Participant & Supporter'
+        participation = e(person.get('participation') or default_role)
+        portrait_record = dict(person)
+        if not portrait_record.get('photo'):
+            detail = next((s for s in SPEAKERS if s.get('slug') == person.get('slug')), {})
+            if detail.get('photo'):
+                portrait_record['photo'] = detail['photo']
+        portrait = speaker_image(portrait_record, 'community-member__portrait')
+        profile_link = ''
+        if kind == 'faculty' and person.get('slug') in published_profiles:
+            profile_link = (f'<a class="community-member__profile-link" '
+                f'href="{e(internal("speakers/"+person["slug"]+"/"))}">'
+                f'View Profile {icon("up-right",14)}</a>')
+        return (
+            f'<article class="community-member" data-member-kind="{kind}" '
+            f'data-member-slug="{e(person.get("slug", ""))}">'
             f'<div class="community-member__image">{portrait}</div>'
             f'<div class="community-member__details">'
             f'<h3>{name}</h3>'
             f'<p class="community-member__title">{position}</p>'
             f'<p class="community-member__institution">{affiliation}</p>'
-            f'{profile_link}'
-            f'</div>'
+            f'{profile_link}</div>'
             f'<div class="community-member__role">{participation}</div>'
             f'</article>'
+        )
+
+    faculty_cards = ''.join(member_card(person) for person in faculty)
+    student_section = ''
+    if students:
+        student_cards = ''.join(member_card(person) for person in students)
+        student_section = (
+            '<div class="student-community-block" id="student-community">'
+            '<div class="section-heading-row"><h2>Student participants<br>'
+            '<em>and supporters.</em></h2>'
+            '<p>Students are part of the ERS–WVSU research and seminar community. '
+            'We welcome their participation, questions, and perspectives.</p></div>'
+            f'<div class="community-roster-grid community-roster-grid--students">{student_cards}</div>'
+            '</div>'
         )
     role_html = ''.join(
         f'<article class="community-role"><span class="role-index">{i:02d}</span>'
@@ -422,10 +447,11 @@ def render_speakers():
 <section class="section community-roster-section" id="research-community"><div class="container">
 {section_label('01', 'ERS–WVSU RESEARCH & SEMINAR COMMUNITY')}
 <div class="section-heading-row"><h2>One community.<br><em>Many contributions.</em></h2>
-<p>ERS–WVSU welcomes active participation from colleagues in economics, business,
-management, and other disciplines. Coordination and participation roles are
-shown together to recognize the shared work behind our research exchange.</p></div>
-<div class="community-roster-grid">{''.join(cards)}</div>
+<p>ERS–WVSU brings together faculty and students from economics, business, management,
+and other disciplines. Coordination and participation roles recognize the shared work
+behind our research exchange.</p></div>
+<div class="community-roster-grid community-roster-grid--faculty">{faculty_cards}</div>
+{student_section}
 </div></section>
 <section class="section community-contributions" id="ways-to-contribute"><div class="container">
 {section_label('02', 'WAYS TO PARTICIPATE')}
@@ -574,6 +600,13 @@ def render_about():
 def render_speaker_detail(sp):
     name=sp.get('name','Speaker')
     site_url=remote_url(sp.get('website_url',''))
+    # ERS PROFESSIONAL WEBSITE FILTER
+    parsed_site = urlparse(site_url) if site_url else None
+    site_host = parsed_site.hostname.lower() if parsed_site and parsed_site.hostname else ''
+    site_path = parsed_site.path.rstrip('/').lower() if parsed_site else ''
+    if sp.get('professional_website_available') is False or site_host == 'directory.wvstateu.edu' or (site_host in ('wvstateu.edu', 'www.wvstateu.edu') and site_path in ('', '/university-directory')):
+        site_url = ''
+
     website=(f'<a class="inline-link" href="{e(site_url)}" target="_blank" rel="noopener noreferrer">{e("View Google Scholar profile" if "scholar.google.com" in site_url else "Visit professional website")} {icon("up-right",16)}</a>' if site_url else '')
     tags=''.join(f'<span class="expertise-tag">{e(t.strip())}</span>' for t in sp.get('expertise','').split(';') if t.strip())
     pub_url=remote_url(sp.get('featured_publication_url',''))
@@ -635,7 +668,7 @@ def make_appearance_css():
         'background_color':'#FCFBF7',
         'secondary_background_color':'#F3F0E7',
         'dark_background_color':'#151A17',
-        'accent_color':'#CFAB2B',
+        'accent_color':'#CDAD35',
     }
     values=[]
     for name,(low,high,default) in sizes.items():

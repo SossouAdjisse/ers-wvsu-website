@@ -2,11 +2,11 @@
   "name": "Frehot Hailou, Ph.D.",
   "slug": "frehot-hailou",
   "role": "Co-Coordinator",
-  "position": "Professor; Chair, Department of Economics, Finance & Marketing",
+  "position": "Professor of Economics & Chair, Department of Economics and Agribusiness",
   "affiliation": "West Virginia State University",
   "expertise": "Economic policy; regional economic development; applied economics",
-  "bio": "Dr. Frehot Hailou is Professor and Chair of the Department of Economics, Finance & Marketing at West Virginia State University. He serves as Co-Coordinator of ERS–WVSU and contributes to the seminar’s research-development mission across applied economics, public policy, and regional economic development.",
-  "website_url": "https://wvstateu.edu/university-directory/",
+  "bio": "Dr. Frehot Hailou is Professor and Chair of the Department of Economics and Agribusiness at West Virginia State University. He serves as Co-Coordinator of ERS–WVSU and contributes to the seminar’s research-development mission across applied economics, public policy, and regional economic development.",
+  "website_url": "",
   "photo": "",
   "status": "published",
   "sort_order": 2,
@@ -15,5 +15,6 @@
   "past_talk_note": "October 21, 2026 | 2:00–3:00 p.m. EDT. ERS–WVSU research presentation on alcohol policy and school attendance.",
   "past_talk_date": "2026-10-21",
   "past_talk_time": "2:00–3:00 p.m. EDT",
-  "past_talk_summary": "This research presentation examined how changes to Sunday alcohol-sales restrictions (“blue laws”) could be studied in relation to school attendance. It highlighted the policy context, potential behavioral mechanisms, data requirements, and empirical identification challenges. The discussion concerned research design and questions; no causal results are asserted here."
+  "past_talk_summary": "This research presentation examined how changes to Sunday alcohol-sales restrictions (“blue laws”) could be studied in relation to school attendance. It highlighted the policy context, potential behavioral mechanisms, data requirements, and empirical identification challenges. The discussion concerned research design and questions; no causal results are asserted here.",
+  "professional_website_available": false
 }
