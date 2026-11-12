@@ -155,7 +155,7 @@ def nav_html(active):
     return f'''<div class="site-announcement"><div class="container announcement-inner"><span><span class="status-spark" aria-hidden="true"></span> ECONOMICS-CENTERED RESEARCH EXCHANGE</span><span class="announcement-right">WEST VIRGINIA STATE UNIVERSITY <span class="bullet">·</span> EST. 2026</span></div></div>
 <header class="site-header" id="site-header">
   <div class="container header-brand-row"><a class="brand" href="{e(internal('index.html'))}" aria-label="ERS–WVSU home"><span class="brand-mark">E<span class="brand-period">.</span>R.S<span class="brand-period">.</span></span><span class="brand-rule" aria-hidden="true"></span><span class="brand-name">Economic Research Seminar<span>West Virginia State University</span></span></a>
-    <p class="header-purpose">ECONOMIC REASONING <span>·</span> DATA ANALYSIS <span>·</span> CAUSAL INFERENCE</p>
+    <p class="header-purpose">ECONOMIC REASONING <span>·</span> DATA ANALYSIS <span>·</span> CAUSAL INFERENCE<strong class="ers-tagline">Where Voices Strengthen Understanding</strong></p>
     <button class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
   </div>
   <div class="site-nav-row"><div class="container site-nav-inner"><nav class="primary-nav" id="primary-nav" aria-label="Main navigation">{''.join(links)}</nav></div></div>

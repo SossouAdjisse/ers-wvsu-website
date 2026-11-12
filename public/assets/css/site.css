@@ -1311,3 +1311,20 @@ body:has(.nav-link.is-active[href="/get-involved/"]) .page-hero h1 em {
   .student-community-block { margin-top:42px; padding-top:38px; }
 }
 /* ERS GOLD PEOPLE REFRESH END */
+
+/* ERS HEADER TAGLINE */
+.header-brand-row .header-purpose {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 35px;
+}
+
+.header-brand-row .header-purpose .ers-tagline {
+  display: block;
+  margin-top: 8px;
+  padding: 0;
+  font: italic 700 22px/1.2 "Times New Roman", Times, serif;
+  color: #111;
+  letter-spacing: 0;
+  text-transform: none;
+}
